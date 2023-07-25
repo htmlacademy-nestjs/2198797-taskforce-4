@@ -1,3 +1,5 @@
+import { User } from "./user.interface";
+
 export interface Task {
     _id?: string;
     name: string;
@@ -9,4 +11,5 @@ export interface Task {
     address: string;
     tags: string;
     city: string;
+    creator: User;
 }
