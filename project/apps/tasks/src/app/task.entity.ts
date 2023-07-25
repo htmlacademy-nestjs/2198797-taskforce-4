@@ -1,4 +1,4 @@
-import { User, Task} from '@project/shared/app-types';
+import {Task} from '@project/shared/app-types';
 
 export class TaskEntity implements Task {
     public _id?: string;
@@ -6,12 +6,13 @@ export class TaskEntity implements Task {
     public description: string;
     public category: string;
     public price: number;
+    public creationDate: Date;
     public deadline: Date;
     public picture: string;
     public address: string;
     public tags: string;
     public city: string;
-    public creator: User;
+    public userId: string;
 
     constructor(task: Task) {
         this.fillEntity(task);
@@ -24,12 +25,13 @@ export class TaskEntity implements Task {
             description: this.description,
             category: this.category,
             price: this.price,
+            creationDate: this.creationDate,
             deadline: this.deadline,
             picture: this.picture,
             address: this.address,
             tags: this.tags,
             city: this.city,
-            creator: this.creator
+            userId: this.userId
         };
     }
 
@@ -39,11 +41,12 @@ export class TaskEntity implements Task {
         this.description = task.description;
         this.category = task.category;
         this.price = task.price;
+        this.creationDate = task.creationDate;
         this.deadline = task.deadline;
         this.picture = task.picture;
         this.address = task.address;
         this.tags = task.tags;
         this.city = task.city;
-        this.creator = task.creator;
+        this.userId = task.userId;
     }
 }
