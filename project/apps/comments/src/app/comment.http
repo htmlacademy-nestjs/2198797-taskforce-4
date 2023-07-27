@@ -1,0 +1,16 @@
+# Create a new task
+POST http://localhost:3000/api/comments/create HTTP/1.1
+Content-Type: application/json
+
+{
+  "text": "Hellloooooo!!!!!",
+  "userId": "13",
+  "taskId": "13"
+}
+
+###
+
+# Get task by ID
+GET http://localhost:3000/api/comments/d20caa57-b6c7-4c2d-9898-e0d15e4a5f4f HTTP/1.1
+
+###
