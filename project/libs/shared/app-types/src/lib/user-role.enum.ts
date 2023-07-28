@@ -1,4 +1,4 @@
 export enum UserRole {
-    Executor = 'executor',
-    Client = 'client',
+  Executor = 'executor',
+  Client = 'client',
 }

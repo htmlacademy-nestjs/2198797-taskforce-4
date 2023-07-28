@@ -52,6 +52,4 @@ export class TaskController {
   public async delete(@Param('id') id: string) {
     await this.taskService.delete(id);
   }
-
-
 }
