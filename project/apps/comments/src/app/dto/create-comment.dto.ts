@@ -19,4 +19,3 @@ export class CreateCommentDto {
 	})
 	public userId: string;
 }
-

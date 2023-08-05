@@ -9,52 +9,52 @@ import { TaskUserRepository } from '../task-user/task-user.repository';
 
 @Injectable()
 export class AuthenticationService {
-    constructor(
-        private readonly taskUserRepository: TaskUserRepository
-    ) { }
+  constructor(
+    private readonly taskUserRepository: TaskUserRepository
+  ) { }
 
-    public async register(dto: CreateUserDto) {
-        const { email, firstname, lastname, password, dateBirth, city, role } = dto;
+  public async register(dto: CreateUserDto) {
+    const { email, firstname, lastname, password, dateBirth, city, role } = dto;
 
-        const taskUser = {
-            email, firstname, lastname, city, role,
-            avatar: '', dateBirth: dayjs(dateBirth).toDate(),
-            passwordHash: ''
-        };
+    const taskUser = {
+      email, firstname, lastname, city, role,
+      avatar: '', dateBirth: dayjs(dateBirth).toDate(),
+      passwordHash: ''
+    };
 
-        const existUser = await this.taskUserRepository
-            .findByEmail(email);
+    const existUser = await this.taskUserRepository
+      .findByEmail(email);
 
-        if (existUser) {
-            throw new ConflictException(AUTH_USER_EXISTS);
-        }
-
-        const userEntity = await new TaskUserEntity(taskUser)
-            .setPassword(password)
-
-        return this.taskUserRepository
-            .create(userEntity);
+    if (existUser) {
+      throw new ConflictException(AUTH_USER_EXISTS);
     }
 
+    const userEntity = await new TaskUserEntity(taskUser)
+      .setPassword(password)
 
-    public async verifyUser(dto: LoginUserDto) {
-        const { email, password } = dto;
-        const existUser = await this.taskUserRepository.findByEmail(email);
+    return this.taskUserRepository
+      .create(userEntity);
+  }
 
-        if (!existUser) {
-            throw new NotFoundException(AUTH_USER_NOT_FOUND);
-        }
 
-        const taskUserEntity = new TaskUserEntity(existUser);
-        if (!await taskUserEntity.comparePassword(password)) {
-            throw new UnauthorizedException(AUTH_USER_PASSWORD_WRONG);
-        }
+  public async verifyUser(dto: LoginUserDto) {
+    const { email, password } = dto;
+    const existUser = await this.taskUserRepository.findByEmail(email);
 
-        return taskUserEntity.toObject();
+    if (!existUser) {
+      throw new NotFoundException(AUTH_USER_NOT_FOUND);
     }
 
-    public async getUser(id: string) {
-        return this.taskUserRepository.findById(id);
+    const taskUserEntity = new TaskUserEntity(existUser);
+    if (!await taskUserEntity.comparePassword(password)) {
+      throw new UnauthorizedException(AUTH_USER_PASSWORD_WRONG);
     }
+
+    return taskUserEntity.toObject();
+  }
+
+  public async getUser(id: string) {
+    return this.taskUserRepository.findById(id);
+  }
 
 }

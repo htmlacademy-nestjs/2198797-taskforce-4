@@ -7,51 +7,51 @@ import { COMMENT_NOT_FOUND } from './comment.constants';
 
 @Injectable()
 export class CommentService {
-    constructor(
-        private readonly commentRepository: CommentMemoryRepository
-    ) { }
+  constructor(
+    private readonly commentRepository: CommentMemoryRepository
+  ) { }
 
-    public async create(dto: CreateCommentDto) {
-        const { text, taskId, userId } = dto;
+  public async create(dto: CreateCommentDto) {
+    const { text, taskId, userId } = dto;
 
-        const comment = {
-            text, taskId, creationDate: dayjs().toDate(), userId
-        };
+    const comment = {
+      text, taskId, creationDate: dayjs().toDate(), userId
+    };
 
-        const commentEntity = await new CommentEntity(comment)
+    const commentEntity = await new CommentEntity(comment)
 
-        return this.commentRepository
-            .create(commentEntity);
+    return this.commentRepository
+      .create(commentEntity);
+  }
+
+  public async delete(id: string) {
+    const existComment = await this.commentRepository.findById(id);
+
+    if (!existComment) {
+      throw new NotFoundException(COMMENT_NOT_FOUND);
     }
 
-    public async delete(id: string) {
-        const existComment = await this.commentRepository.findById(id);
+    await this.commentRepository.destroy(id);
+  }
 
-        if (!existComment) {
-            throw new NotFoundException(COMMENT_NOT_FOUND);
-        }
+  public async update(id: string, dto: CreateCommentDto) {
+    const existComment = await this.commentRepository.findById(id);
 
-        await this.commentRepository.destroy(id);
+    if (!existComment) {
+      throw new NotFoundException(COMMENT_NOT_FOUND);
+    }
+    const newCommentEntity = await new CommentEntity({ ...existComment, ...dto });
+
+    return await this.commentRepository.update(id, newCommentEntity);
+  }
+
+  public async getComment(id: string) {
+    const existComment = await this.commentRepository.findById(id);
+
+    if (!existComment) {
+      throw new NotFoundException(COMMENT_NOT_FOUND);
     }
 
-    public async update(id: string, dto: CreateCommentDto) {
-        const existComment = await this.commentRepository.findById(id);
-
-        if (!existComment) {
-            throw new NotFoundException(COMMENT_NOT_FOUND);
-        }
-        const newCommentEntity = await new CommentEntity({ ...existComment, ...dto });
-
-        return await this.commentRepository.update(id, newCommentEntity);
-    }
-
-    public async getComment(id: string) {
-        const existComment = await this.commentRepository.findById(id);
-
-        if (!existComment) {
-            throw new NotFoundException(COMMENT_NOT_FOUND);
-        }
-
-        return existComment;
-    }
+    return existComment;
+  }
 }
