@@ -34,18 +34,18 @@ export class CommentService {
     await this.commentRepository.destroy(id);
   }
 
-  public async update(id: string, dto:CreateCommentDto){
+  public async update(id: string, dto: CreateCommentDto) {
     const existComment = await this.commentRepository.findById(id);
 
     if (!existComment) {
       throw new NotFoundException(COMMENT_NOT_FOUND);
     }
-    const newCommentEntity = await new CommentEntity({...existComment, ...dto});
+    const newCommentEntity = await new CommentEntity({ ...existComment, ...dto });
 
     return await this.commentRepository.update(id, newCommentEntity);
   }
 
-  public async getComment(id: string){
+  public async getComment(id: string) {
     const existComment = await this.commentRepository.findById(id);
 
     if (!existComment) {

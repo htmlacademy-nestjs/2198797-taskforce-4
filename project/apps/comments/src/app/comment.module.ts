@@ -9,4 +9,4 @@ import { CommentMemoryRepository } from './comment-memory.repository';
   controllers: [CommentController],
   providers: [CommentService, CommentMemoryRepository],
 })
-export class CommentModule {}
+export class CommentModule { }

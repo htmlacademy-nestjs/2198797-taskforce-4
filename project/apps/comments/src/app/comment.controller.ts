@@ -8,7 +8,7 @@ import { ApiResponse, ApiTags } from '@nestjs/swagger';
 @ApiTags('comments')
 @Controller('comments')
 export class CommentController {
-  constructor(private readonly commentService: CommentService) {}
+  constructor(private readonly commentService: CommentService) { }
 
   @ApiResponse({
     type: CommentRdo,

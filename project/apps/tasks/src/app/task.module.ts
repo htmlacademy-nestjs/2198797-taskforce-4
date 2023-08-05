@@ -9,4 +9,4 @@ import { TaskMemoryRepository } from './task-memory.repository';
   controllers: [TaskController],
   providers: [TaskService, TaskMemoryRepository],
 })
-export class TaskModule {}
+export class TaskModule { }

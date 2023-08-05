@@ -38,18 +38,18 @@ export class TaskService {
     await this.taskRepository.destroy(id);
   }
 
-  public async update(id: string, dto:UpdateTaskDto){
+  public async update(id: string, dto: UpdateTaskDto) {
     const existTask = await this.taskRepository.findById(id);
 
     if (!existTask) {
       throw new NotFoundException(TASK_NOT_FOUND);
     }
-    const newTaskEntity = await new TaskEntity({...existTask, ...dto});
+    const newTaskEntity = await new TaskEntity({ ...existTask, ...dto });
 
     return await this.taskRepository.update(id, newTaskEntity);
   }
 
-  public async getTask(id: string){
+  public async getTask(id: string) {
     const existTask = await this.taskRepository.findById(id);
 
     if (!existTask) {
