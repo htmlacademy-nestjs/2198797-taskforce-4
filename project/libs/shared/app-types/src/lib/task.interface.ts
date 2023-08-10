@@ -1,14 +1,23 @@
+import { Category } from "./category.interface";
+import { Comment } from "./comment.interface";
+import { Review } from "./review.interface";
+
 export interface Task {
-  _id?: string;
-  name: string;
+  taskId?: number;
+  title: string;
   description: string;
-  category: string;
-  price: number;
-  creationDate: Date;
+  price?: number;
+  createdAt?: Date;
   deadline: Date;
-  picture: string;
-  address: string;
-  tags: string;
+  picture?: string;
+  address?: string;
+  tags?: string[];
   city: string;
-  userId: string;
+  status: string;
+  review?: Review;
+  creatorId: string;
+  executorId?: string;
+  comments: Comment[];
+  category: Category;
+
 }

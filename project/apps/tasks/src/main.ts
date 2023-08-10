@@ -6,11 +6,11 @@
 import { Logger } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 
-import { TaskModule } from './app/task.module';
+import { AppModule } from './app/app.module';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
 async function bootstrap() {
-  const app = await NestFactory.create(TaskModule);
+  const app = await NestFactory.create(AppModule);
 
 
   const config = new DocumentBuilder()
