@@ -3,7 +3,7 @@ import { Entity } from '@project/util/util-types';
 
 
 export class TaskEntity implements Entity<TaskEntity>, Task {
-  public taskId: number;
+  public id: number;
   public title: string;
   public description: string;
   public price: number;
@@ -21,7 +21,7 @@ export class TaskEntity implements Entity<TaskEntity>, Task {
   public review?: Review;
 
   public fillEntity(task: Task) {
-    this.taskId = task.taskId;
+    this.id = task.id;
     this.title = task.title;
     this.description = task.description;
     this.price = task.price;

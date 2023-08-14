@@ -3,24 +3,25 @@ POST http://localhost:3000/api/tasks/create HTTP/1.1
 Content-Type: application/json
 
 {
-  "name": "Find Cat",
+  "title": "Find Cat",
   "description": "Find the best cat in the world",
-  "category": "Search",
+  "category": "1",
   "price": "100",
   "deadline": "2023-10-22",
   "address": "Yokogama st.",
-  "tags": "x3,tag",
-  "city": "St. Petersburg"
+  "city": "St. Petersburg",
+  "tags": ["x3","15"],
+  "creatorId": "13"
 }
 
 ###
 
 # Get task by ID
-GET http://localhost:3000/api/tasks/2 HTTP/1.1
+GET http://localhost:3000/api/tasks/5 HTTP/1.1
 
 ###
 # Update a task
-POST http://localhost:3000/api/tasks/update/cc87c95e-8ec0-4a1d-a548-9c793e4dd392 HTTP/1.1
+PATCH http://localhost:3000/api/tasks/update/5 HTTP/1.1
 Content-Type: application/json
 
 {

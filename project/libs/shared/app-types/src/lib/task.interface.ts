@@ -3,7 +3,7 @@ import { Comment } from "./comment.interface";
 import { Review } from "./review.interface";
 
 export interface Task {
-  taskId?: number;
+  id?: number;
   title: string;
   description: string;
   price?: number;

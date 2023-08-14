@@ -18,6 +18,7 @@ export class TaskRepository implements CRUDRepository<TaskEntity, number, Task> 
           connect: []
         },
         category: {
+          connect: {categoryId:entityData.category.categoryId}
         },
         review: {
         },

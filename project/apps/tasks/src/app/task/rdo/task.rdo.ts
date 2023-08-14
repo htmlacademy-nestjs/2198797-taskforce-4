@@ -1,14 +1,14 @@
 import { Expose } from 'class-transformer';
 import { ApiProperty } from '@nestjs/swagger';
-import { Comment, Category } from '@project/shared/app-types';
+import { Comment, Category, Review } from '@project/shared/app-types';
 
 export class TaskRdo {
   @ApiProperty({
     description: 'The uniq task ID',
     example: '13'
   })
-  @Expose({ name: '_id' })
-  public id: string;
+  @Expose({ name: 'taskId' })
+  public taskId: string;
 
   @ApiProperty({
     description: 'Task name',
@@ -107,5 +107,8 @@ export class TaskRdo {
   })
   @Expose()
   public comments: Comment[];
+
+  @Expose()
+  public review: Review;
 
 }
