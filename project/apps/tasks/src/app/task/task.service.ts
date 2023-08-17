@@ -6,6 +6,7 @@ import { UpdateTaskDto } from './dto/update-task.dto';
 import { TaskEntity } from './task.entity';
 import { TASK_NOT_FOUND } from './task.constatnts';
 import { Task } from '@project/shared/app-types';
+import { TaskQuery } from './query/task.query';
 
 
 @Injectable()
@@ -17,7 +18,7 @@ export class TaskService {
 
   async create(dto: CreateTaskDto): Promise<Task> {
     const category = await this.categoryRepository.findById(dto.category);
-    const taskEntity = new TaskEntity({ ...dto, comments: [], status: 'new', creatorId: '1234', category});
+    const taskEntity = new TaskEntity({ ...dto, comments: [], status: 'new', creatorId: '1234', category });
     return this.taskRepository.create(taskEntity);
   }
 
@@ -51,4 +52,9 @@ export class TaskService {
 
     return existTask;
   }
+
+  async getTasks(query: TaskQuery): Promise<Task[]> {
+    return this.taskRepository.find(query);
+  }
+
 }

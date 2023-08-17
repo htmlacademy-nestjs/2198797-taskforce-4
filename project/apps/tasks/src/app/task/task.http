@@ -5,8 +5,8 @@ Content-Type: application/json
 {
   "title": "Find Cat",
   "description": "Find the best cat in the world",
-  "category": "1",
-  "price": "100",
+  "category": "2",
+  "price": "10",
   "deadline": "2023-10-22",
   "address": "Yokogama st.",
   "city": "St. Petersburg",

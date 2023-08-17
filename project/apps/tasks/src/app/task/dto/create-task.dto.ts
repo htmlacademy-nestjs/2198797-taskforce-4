@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Transform } from 'class-transformer';
-import { IsInt, IsString, IsOptional, Min, Max, IsDate, IsArray, IsNotEmpty } from 'class-validator';
+import { IsInt, IsString, IsOptional, Min, Max, IsArray, IsNotEmpty, IsISO8601 } from 'class-validator';
 
 export class CreateTaskDto {
   @ApiProperty({
@@ -31,7 +31,7 @@ export class CreateTaskDto {
     description: 'Task deadline',
     example: '2024-03-12'
   })
-  @IsDate()
+  @IsISO8601()
   @Transform(({value}) => new Date(value))
   public deadline: Date;
 
