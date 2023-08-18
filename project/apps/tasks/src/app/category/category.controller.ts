@@ -11,9 +11,8 @@ export class CategoryController {
     private readonly categoryService: CategoryService
   ) { }
   @Get('/:id')
-  async show(@Param('id') id: string) {
-    const categoryId = parseInt(id, 10);
-    const existCategory = await this.categoryService.getCategory(categoryId);
+  async show(@Param('id') id: number) {
+    const existCategory = await this.categoryService.getCategory(id);
     return fillObject(CategoryRdo, existCategory);
   }
 
@@ -31,15 +30,13 @@ export class CategoryController {
 
   @Delete('/:id')
   @HttpCode(HttpStatus.NO_CONTENT)
-  async destroy(@Param('id') id: string) {
-    const categoryId = parseInt(id, 10);
-    this.categoryService.deleteCategory(categoryId);
+  async destroy(@Param('id') id: number) {
+    this.categoryService.deleteCategory(id);
   }
 
   @Patch('/:id')
-  async update(@Param('id') id: string, @Body() dto: UpdateCategoryDto) {
-    const categoryId = parseInt(id, 10);
-    const updatedCategory = await this.categoryService.updateCategory(categoryId, dto)
+  async update(@Param('id') id: number, @Body() dto: UpdateCategoryDto) {
+    const updatedCategory = await this.categoryService.updateCategory(id, dto)
     return fillObject(CategoryRdo, updatedCategory);
   }
 }

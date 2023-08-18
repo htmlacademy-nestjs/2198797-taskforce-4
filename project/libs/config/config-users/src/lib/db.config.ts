@@ -40,7 +40,5 @@ export default registerAs('db', (): DbConfig => {
     );
   }
 
-  console.log(config);
-
   return config;
 });

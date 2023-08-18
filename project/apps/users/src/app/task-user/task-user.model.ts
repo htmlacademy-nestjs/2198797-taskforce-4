@@ -45,7 +45,7 @@ export class TaskUserModel extends Document implements User {
     required: true,
     type: String,
     enum: UserRole,
-    default: UserRole.Client,
+    default: UserRole.CLIENT,
   })
   public role: UserRole;
 }

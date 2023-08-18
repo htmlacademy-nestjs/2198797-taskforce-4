@@ -3,6 +3,7 @@ import { CRUDRepository } from '@project/util/util-types';
 import { TaskEntity } from './task.entity';
 import { Task } from '@project/shared/app-types';
 import { PrismaService } from '../prisma/prisma.service';
+import { TaskQuery } from './query/task.query';
 
 
 @Injectable()
@@ -18,7 +19,7 @@ export class TaskRepository implements CRUDRepository<TaskEntity, number, Task> 
           connect: []
         },
         category: {
-          connect: {categoryId:entityData.category.categoryId}
+          connect: { categoryId: entityData.category.categoryId }
         },
         review: {
         },
@@ -52,13 +53,25 @@ export class TaskRepository implements CRUDRepository<TaskEntity, number, Task> 
     });
   }
 
-  public find(): Promise<Task[]> {
+  public find({ limit, categories, sortDirection, page }: TaskQuery): Promise<Task[]> {
     return this.prisma.task.findMany({
+      where: {
+        category: {
+          categoryId: {
+            in: categories
+          }
+        }
+      },
+      take: limit,
       include: {
         comments: true,
         category: true,
         review: true,
-      }
+      },
+      orderBy: [
+        { createdAt: sortDirection }
+      ],
+      skip: page > 0 ? limit * (page - 1) : undefined,
     });
   }
 

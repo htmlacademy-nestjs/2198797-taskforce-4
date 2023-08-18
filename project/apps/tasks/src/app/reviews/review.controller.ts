@@ -10,9 +10,8 @@ export class ReviewController {
     private readonly reviewService: ReviewService
   ) { }
   @Get('/:id')
-  async show(@Param('id') id: string) {
-    const reviewId = parseInt(id, 10);
-    const existReview = await this.reviewService.getReview(reviewId);
+  async show(@Param('id') id: number) {
+    const existReview = await this.reviewService.getReview(id);
     return fillObject(ReviewRdo, existReview);
   }
 
@@ -25,8 +24,7 @@ export class ReviewController {
 
   @Delete('/:id')
   @HttpCode(HttpStatus.NO_CONTENT)
-  async destroy(@Param('id') id: string) {
-    const reviewId = parseInt(id, 10);
-    this.reviewService.deleteReview(reviewId);
+  async destroy(@Param('id') id: number) {
+    this.reviewService.deleteReview(id);
   }
 }

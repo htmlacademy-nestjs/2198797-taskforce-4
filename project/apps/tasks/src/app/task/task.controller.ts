@@ -1,10 +1,11 @@
-import { Body, Controller, Get, HttpStatus, Param, Patch, Post } from '@nestjs/common';
+import { Body, Controller, Get, HttpStatus, Param, Patch, Post, Query } from '@nestjs/common';
 import { TaskService } from './task.service';
 import { TaskRdo } from './rdo/task.rdo';
 import { CreateTaskDto } from './dto/create-task.dto';
 import { fillObject } from '@project/util/util-core';
 import { UpdateTaskDto } from './dto/update-task.dto';
 import { ApiResponse, ApiTags } from '@nestjs/swagger';
+import { TaskQuery } from './query/task.query';
 
 @ApiTags('tasks')
 @Controller('tasks')
@@ -28,9 +29,8 @@ export class TaskController {
     description: 'Task found'
   })
   @Get(':id')
-  public async show(@Param('id') id: string) {
-    const taskId = parseInt(id, 10);
-    const existTask = await this.taskService.getTask(taskId);
+  public async show(@Param('id') id: number) {
+    const existTask = await this.taskService.getTask(id);
     return fillObject(TaskRdo, existTask);
   }
 
@@ -40,9 +40,8 @@ export class TaskController {
     description: 'The task has been successfully updated.'
   })
   @Patch('update/:id')
-  public async update(@Body() dto: UpdateTaskDto, @Param('id') id: string) {
-    const taskId = parseInt(id, 10);
-    const task = await this.taskService.update(taskId, dto);
+  public async update(@Body() dto: UpdateTaskDto, @Param('id') id: number) {
+    const task = await this.taskService.update(id, dto);
     return fillObject(TaskRdo, task);
   }
 
@@ -51,8 +50,13 @@ export class TaskController {
     description: 'Task deleted'
   })
   @Post('delete/:id')
-  public async delete(@Param('id') id: string) {
-    const taskId = parseInt(id, 10);
-    await this.taskService.delete(taskId);
+  public async delete(@Param('id') id: number) {
+    await this.taskService.delete(id);
+  }
+
+  @Get('/')
+  async index(@Query() query: TaskQuery) {
+    const tasks = await this.taskService.getTasks(query);
+    return fillObject(TaskRdo, tasks);
   }
 }
