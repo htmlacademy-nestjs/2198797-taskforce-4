@@ -9,7 +9,7 @@ import { extension } from 'mime-types';
 import { FileRepository } from './file.repository';
 import { FileEntity } from './file.entity';
 
-type WritedFile = {
+type WrittenFile = {
   hashName: string;
   fileExtension: string;
   subDirectory: string;
@@ -23,7 +23,7 @@ export class FileService {
     private readonly applicationConfig: ConfigType<typeof uploaderConfig>,
     private readonly fileRepository: FileRepository,
   ) {}
-  private async writeFile(file: Express.Multer.File): Promise<WritedFile> {
+  private async writeFile(file: Express.Multer.File): Promise<WrittenFile> {
     const [ year, month ] = dayjs().format('YYYY MM').split(' ');
     const { uploadDirectory } = this.applicationConfig;
     const subDirectory = `${year}/${month}`;
@@ -48,13 +48,13 @@ export class FileService {
 
 
   public async saveFile(file: Express.Multer.File) {
-    const writedFile = await this.writeFile(file);
+    const writtenFile = await this.writeFile(file);
     const newFile = new FileEntity({
       size: file.size,
-      hashName: writedFile.hashName,
+      hashName: writtenFile.hashName,
       mimetype: file.mimetype,
       originalName: file.originalname,
-      path: writedFile.path,
+      path: writtenFile.path,
     });
 
     return this.fileRepository.create(newFile);

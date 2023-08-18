@@ -19,7 +19,7 @@ export class TaskRepository implements CRUDRepository<TaskEntity, number, Task> 
           connect: []
         },
         category: {
-          connect: {categoryId:entityData.category.categoryId}
+          connect: { categoryId: entityData.category.categoryId }
         },
         review: {
         },
@@ -53,13 +53,13 @@ export class TaskRepository implements CRUDRepository<TaskEntity, number, Task> 
     });
   }
 
-  public find({limit, categories, sortDirection, page}: TaskQuery): Promise<Task[]> {
+  public find({ limit, categories, sortDirection, page }: TaskQuery): Promise<Task[]> {
     return this.prisma.task.findMany({
       where: {
         category: {
-            categoryId: {
-              in: categories
-            }
+          categoryId: {
+            in: categories
+          }
         }
       },
       take: limit,
