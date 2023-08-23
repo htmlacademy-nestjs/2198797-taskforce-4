@@ -7,3 +7,5 @@ export * from './lib/task-status.enum';
 export * from './lib/category.interface';
 export * from './lib/file.interface';
 export * from './lib/token-payload.interface';
+export * from './lib/subscriber.interface';
+export * from './lib/rabbit-routing.enum';
