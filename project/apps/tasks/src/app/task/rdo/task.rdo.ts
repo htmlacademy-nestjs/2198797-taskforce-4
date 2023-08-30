@@ -1,6 +1,8 @@
 import { Expose } from 'class-transformer';
 import { ApiProperty } from '@nestjs/swagger';
 import { Comment, Category, Review } from '@project/shared/app-types';
+import { TaskStatus } from '@project/shared/app-types';
+import { TaskCity } from '@project/shared/app-types';
 
 export class TaskRdo {
   @ApiProperty({
@@ -75,17 +77,17 @@ export class TaskRdo {
 
   @ApiProperty({
     description: 'Task city',
-    example: 'St. Petersburg'
+    example: 'Moscow'
   })
   @Expose()
-  public city: string;
+  public city: TaskCity;
 
   @ApiProperty({
     description: 'Task status',
     example: 'done'
   })
   @Expose()
-  public status?: string;
+  public status?: TaskStatus;
 
   @ApiProperty({
     description: 'The uniq creator ID',
@@ -110,5 +112,14 @@ export class TaskRdo {
 
   @Expose()
   public review: Review;
+
+  @Expose()
+  public responses: string[];
+
+  @Expose()
+  public responsesCount: number;
+
+  @Expose()
+  public commentsCount: number;
 
 }

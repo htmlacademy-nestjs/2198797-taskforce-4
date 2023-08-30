@@ -1,22 +1,20 @@
 import { CRUDRepository } from '@project/util/util-types';
 import { CommentEntity } from './comment.entity';
 import { Comment } from '@project/shared/app-types';
-import { randomUUID } from 'node:crypto';
 import { Injectable } from '@nestjs/common';
 
 @Injectable()
-export class CommentMemoryRepository implements CRUDRepository<CommentEntity, string, Comment> {
+export class CommentMemoryRepository implements CRUDRepository<CommentEntity, number, Comment> {
 
-  private repository: Record<string, Comment> = {};
+  private repository: Record<number, Comment> = {};
 
   public async create(item: CommentEntity): Promise<Comment> {
-    const entry = { ...item.toObject(), _id: randomUUID() };
-    this.repository[entry._id] = entry;
-
+    const entry = { ...item.toObject(), commentId: Math.floor(Math.random()*10) };
+    this.repository[entry.commentId] = entry;
     return entry;
   }
 
-  public async findById(id: string): Promise<Comment | null> {
+  public async findById(id: number): Promise<Comment | null> {
     if (this.repository[id]) {
       return { ...this.repository[id] };
     }
@@ -24,12 +22,12 @@ export class CommentMemoryRepository implements CRUDRepository<CommentEntity, st
     return null;
   }
 
-  public async destroy(id: string): Promise<void> {
+  public async destroy(id: number): Promise<void> {
     delete this.repository[id];
   }
 
-  public async update(id: string, item: CommentEntity): Promise<Comment> {
-    this.repository[id] = { ...item.toObject(), _id: id };
+  public async update(id: number, item: CommentEntity): Promise<Comment> {
+    this.repository[id] = { ...item.toObject(), commentId: id };
     return this.findById(id);
   }
 }

@@ -3,7 +3,7 @@
 
 generator client {
   provider = "prisma-client-js"
-  output = "../../../../node_modules/.prisma/client"
+  output   = "../../../../node_modules/.prisma/client"
 }
 
 datasource db {
@@ -12,23 +12,26 @@ datasource db {
 }
 
 model Task {
-  taskId      Int       @id @default(autoincrement()) @map("task_id")
-  category    Category  @relation(fields: [categoryId], references: [categoryId])
-  categoryId  Int       @map("category_id")
-  title       String    @default("")
-  description String    @default("")
-  price       Float     @default(0)
-  createdAt   DateTime  @default(now()) @map("created_at")
-  deadline    DateTime
-  picture     String    @default("")
-  address     String    @default("")
-  tags        String[]
-  city        String    @default("")
-  status      String    @default("new") 
-  creatorId   String    @default("")  @map("creator_id")
-  executorId  String?   @map("executor_id")
-  comments    Comment[]
-  review      Review?
+  taskId         Int       @id @default(autoincrement()) @map("task_id")
+  category       Category  @relation(fields: [categoryId], references: [categoryId])
+  categoryId     Int       @map("category_id")
+  title          String    @default("")
+  description    String    @default("")
+  price          Float     @default(0)
+  createdAt      DateTime  @default(now()) @map("created_at")
+  deadline       DateTime
+  picture        String    @default("")
+  address        String    @default("")
+  tags           String[]
+  city           String    @default("")
+  status         String    @default("New")
+  creatorId      String    @default("") @map("creator_id")
+  executorId     String?   @map("executor_id")
+  comments       Comment[]
+  review         Review?
+  responses      String[]
+  responsesCount Int       @default(0) @map("responses_count")
+  commentsCount  Int       @default(0) @map("comments_count")
 
   @@map("tasks")
 }
@@ -37,7 +40,6 @@ model Category {
   categoryId Int    @id @default(autoincrement()) @map("category_id")
   title      String
   tasks      Task[]
-
 
   @@map("categories")
 }
@@ -54,11 +56,11 @@ model Comment {
 }
 
 model Review {
-  reviewId Int    @id @default(autoincrement()) @map("review_id")
-  message  String
-  grade    Int
-  task     Task   @relation(fields: [taskId], references: [taskId])
-  taskId   Int    @unique
+  reviewId  Int      @id @default(autoincrement()) @map("review_id")
+  message   String
+  grade     Int
+  task      Task     @relation(fields: [taskId], references: [taskId])
+  taskId    Int      @unique
   createdAt DateTime @default(now()) @map("created_at")
 
   @@map("reviews")

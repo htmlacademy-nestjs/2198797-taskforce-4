@@ -1,4 +1,4 @@
-import { Body, Controller, Get, HttpStatus, Param, Patch, Post, Query } from '@nestjs/common';
+import { Body, Controller, Get, HttpStatus, Param, Patch, Post, Query} from '@nestjs/common';
 import { TaskService } from './task.service';
 import { TaskRdo } from './rdo/task.rdo';
 import { CreateTaskDto } from './dto/create-task.dto';
@@ -6,6 +6,11 @@ import { fillObject } from '@project/util/util-core';
 import { UpdateTaskDto } from './dto/update-task.dto';
 import { ApiResponse, ApiTags } from '@nestjs/swagger';
 import { TaskQuery } from './query/task.query';
+import { TaskStatusPipe } from './pipes/task-status.pipe';
+import { UpdateTaskStatusDto } from './dto/update-task-status.dto';
+import { TaskTagPipe } from './pipes/task-tag.pipe';
+import { AddTaskResponseDto } from './dto/add-task-response.dto';
+
 
 @ApiTags('tasks')
 @Controller('tasks')
@@ -18,9 +23,15 @@ export class TaskController {
     description: 'The new task has been successfully created.'
   })
   @Post('create')
-  public async create(@Body() dto: CreateTaskDto) {
+  public async create(@Body(TaskTagPipe) dto: CreateTaskDto) {
     const newTask = await this.taskService.create(dto);
     return fillObject(TaskRdo, newTask);
+  }
+
+  @Get('new')
+  async getNew() {
+    const tasks = await this.taskService.getNewTasks();
+    return fillObject(TaskRdo, tasks);
   }
 
   @ApiResponse({
@@ -40,7 +51,7 @@ export class TaskController {
     description: 'The task has been successfully updated.'
   })
   @Patch('update/:id')
-  public async update(@Body() dto: UpdateTaskDto, @Param('id') id: number) {
+  public async update(@Body(TaskTagPipe) dto: UpdateTaskDto, @Param('id') id: number) {
     const task = await this.taskService.update(id, dto);
     return fillObject(TaskRdo, task);
   }
@@ -59,4 +70,17 @@ export class TaskController {
     const tasks = await this.taskService.getTasks(query);
     return fillObject(TaskRdo, tasks);
   }
+
+  @Patch('status')
+  public async changeStatus(@Body(TaskStatusPipe) dto: UpdateTaskStatusDto) {
+    const task = await this.taskService.updateTaskStatus(dto);
+    return fillObject(TaskRdo, task);
+  }
+
+  @Patch('response/:id')
+  public async addResponse(@Body() dto: AddTaskResponseDto, @Param('id') id: number) {
+    const task = await this.taskService.addTaskResponse(id, dto);
+    return fillObject(TaskRdo, task);
+  }
+
 }

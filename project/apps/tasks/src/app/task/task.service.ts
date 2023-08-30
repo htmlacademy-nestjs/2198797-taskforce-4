@@ -7,6 +7,9 @@ import { TaskEntity } from './task.entity';
 import { TASK_NOT_FOUND } from './task.constatnts';
 import { Task } from '@project/shared/app-types';
 import { TaskQuery } from './query/task.query';
+import { TaskStatus } from '@project/shared/app-types';
+import { UpdateTaskStatusDto } from './dto/update-task-status.dto';
+import { AddTaskResponseDto } from './dto/add-task-response.dto';
 
 
 @Injectable()
@@ -18,7 +21,7 @@ export class TaskService {
 
   async create(dto: CreateTaskDto): Promise<Task> {
     const category = await this.categoryRepository.findById(dto.category);
-    const taskEntity = new TaskEntity({ ...dto, comments: [], status: 'new', creatorId: '1234', category });
+    const taskEntity = new TaskEntity({ ...dto, comments: [], status: TaskStatus.New, creatorId: '1234', category });
     return this.taskRepository.create(taskEntity);
   }
 
@@ -38,7 +41,7 @@ export class TaskService {
     if (!existTask) {
       throw new NotFoundException(TASK_NOT_FOUND);
     }
-    const newTaskEntity = await new TaskEntity({ ...existTask, ...dto });
+    const newTaskEntity = new TaskEntity({ ...existTask, ...dto });
 
     return await this.taskRepository.update(id, newTaskEntity);
   }
@@ -57,4 +60,31 @@ export class TaskService {
     return this.taskRepository.find(query);
   }
 
+  public async updateTaskStatus(dto: UpdateTaskStatusDto) {
+    const existTask = await this.taskRepository.findById(dto.id);
+
+    if (!existTask) {
+      throw new NotFoundException(TASK_NOT_FOUND);
+    }
+    const newTaskEntity = new TaskEntity({ ...existTask, status: dto.status });
+
+    return await this.taskRepository.update(dto.id, newTaskEntity);
+  }
+
+  public async getNewTasks(): Promise<Task[]> {
+    return this.taskRepository.findNew();
+  }
+
+  public async addTaskResponse(id: number, dto: AddTaskResponseDto): Promise<Task>{
+    const existTask = await this.taskRepository.findById(id);
+
+    if (!existTask) {
+      throw new NotFoundException(TASK_NOT_FOUND);
+    }
+    existTask.responses.push(dto.executorId);
+    existTask.responses = [...new Set(existTask.responses)];
+    existTask.responsesCount = existTask.responses.length ;
+    const newTaskEntity = new TaskEntity({...existTask});
+    return await this.taskRepository.update(id, newTaskEntity);
+  }
 }

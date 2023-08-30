@@ -1,6 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { TaskCity } from '@project/shared/app-types';
 import { Transform } from 'class-transformer';
-import { IsArray, IsDate, IsNotEmpty, IsOptional, IsString, Max, Min } from 'class-validator';
+import { IsArray, IsDate, IsEnum, IsOptional, IsString, Max, MaxLength, Min, MinLength } from 'class-validator';
 
 export class UpdateTaskDto {
   @ApiProperty({
@@ -34,7 +35,7 @@ export class UpdateTaskDto {
   })
   @IsOptional()
   @IsDate()
-  @Transform(({value}) => new Date(value))
+  @Transform(({ value }) => new Date(value))
   public deadline?: Date;
 
   @ApiProperty({
@@ -59,7 +60,12 @@ export class UpdateTaskDto {
   })
   @IsOptional()
   @IsArray()
-  @IsNotEmpty()
+  @MinLength(3, {
+    each: true,
+  })
+  @MaxLength(10, {
+    each: true,
+  })
   public tags?: string[];
 
   @ApiProperty({
@@ -67,16 +73,9 @@ export class UpdateTaskDto {
     example: 'St. Petersburg'
   })
   @IsOptional()
-  @IsString()
-  public city?: string;
+  @IsEnum(TaskCity)
+  public city?: TaskCity;
 
-  @ApiProperty({
-    description: 'Task status',
-    example: 'done'
-  })
-  @IsOptional()
-  @IsString()
-  public status?: string;
 
   @ApiProperty({
     description: 'Task executor Id',

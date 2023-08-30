@@ -4,6 +4,9 @@ import { TaskEntity } from './task.entity';
 import { Task } from '@project/shared/app-types';
 import { PrismaService } from '../prisma/prisma.service';
 import { TaskQuery } from './query/task.query';
+import { TaskStatus } from '@project/shared/app-types';
+import { TaskCity } from '@project/shared/app-types';
+import { DEFAULT_TASK_COUNT_LIMIT } from './task.constatnts';
 
 
 @Injectable()
@@ -12,7 +15,7 @@ export class TaskRepository implements CRUDRepository<TaskEntity, number, Task> 
 
   public async create(item: TaskEntity): Promise<Task> {
     const entityData = item.toObject();
-    return this.prisma.task.create({
+    const dbResponse = await this.prisma.task.create({
       data: {
         ...entityData,
         comments: {
@@ -30,6 +33,8 @@ export class TaskRepository implements CRUDRepository<TaskEntity, number, Task> 
         review: true,
       }
     });
+
+    return ({ ...dbResponse, status: TaskStatus[dbResponse.status], city: TaskCity[dbResponse.city] });
   }
 
   public async destroy(taskId: number): Promise<void> {
@@ -41,7 +46,7 @@ export class TaskRepository implements CRUDRepository<TaskEntity, number, Task> 
   }
 
   public async findById(taskId: number): Promise<Task | null> {
-    return this.prisma.task.findFirst({
+    const dbResponse = await this.prisma.task.findFirst({
       where: {
         taskId
       },
@@ -51,16 +56,19 @@ export class TaskRepository implements CRUDRepository<TaskEntity, number, Task> 
         review: true,
       }
     });
+    return ({ ...dbResponse, status: TaskStatus[dbResponse.status], city: TaskCity[dbResponse.city] });
   }
 
-  public find({ limit, categories, sortDirection, page }: TaskQuery): Promise<Task[]> {
-    return this.prisma.task.findMany({
+  public async find({ limit, categories, sortDirection, page, tag, taskCity, sortBy }: TaskQuery): Promise<Task[]> {
+    const dbResponse = await this.prisma.task.findMany({
       where: {
         category: {
           categoryId: {
             in: categories
           }
-        }
+        },
+        ...(tag ? { tags: { has: tag } } : {}),
+        city: taskCity,
       },
       take: limit,
       include: {
@@ -69,15 +77,57 @@ export class TaskRepository implements CRUDRepository<TaskEntity, number, Task> 
         review: true,
       },
       orderBy: [
-        { createdAt: sortDirection }
+        { [sortBy]: sortDirection }
       ],
       skip: page > 0 ? limit * (page - 1) : undefined,
     });
+
+    return (dbResponse.map((element) => { return { ...element, status: TaskStatus[element.status], city: TaskCity[element.city] } }));
   }
 
-  public update(_id: number, _item: TaskEntity): Promise<Task> {
-    console.log(_id);
-    console.log(_item);
-    return Promise.resolve(undefined);
+  public async update(taskId: number, item: TaskEntity): Promise<Task> {
+    const entityData = item.toObject();
+    const dbResponse = await this.prisma.task.update({
+      where: {
+        taskId
+      },
+      data: {
+        ...entityData,
+        comments: {
+          connect: []
+        },
+        category: {
+          connect: { categoryId: entityData.category.categoryId }
+        },
+        review: {
+        },
+      },
+      include: {
+        comments: true,
+        category: true,
+        review: true,
+      },
+    });
+    return ({ ...dbResponse, status: TaskStatus[dbResponse.status], city: TaskCity[dbResponse.city] });
   }
+
+  public async findNew(): Promise<Task[]> {
+    const dbResponse = await this.prisma.task.findMany({
+      where: {
+        status: TaskStatus.New
+      },
+      take: DEFAULT_TASK_COUNT_LIMIT,
+      include: {
+        comments: true,
+        category: true,
+        review: true,
+      },
+      orderBy: [
+        { createdAt: 'desc' }
+      ],
+    });
+
+    return (dbResponse.map((element) => { return { ...element, status: TaskStatus[element.status], city: TaskCity[element.city] } }));
+  }
+
 }

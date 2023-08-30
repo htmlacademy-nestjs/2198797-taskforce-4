@@ -6,29 +6,29 @@ export class CommentRdo {
     description: 'The uniq comment ID',
     example: '13'
   })
-  @Expose({ name: '_id' })
-  public id: string;
+  @Expose({ name: 'commentId' })
+  public commentId: number;
 
   @ApiProperty({
     description: 'Comment texct',
     example: 'Good morning'
   })
   @Expose()
-  public text: string;
+  public message: string;
 
   @ApiProperty({
     description: 'Date of creation',
     example: '1981-03-12'
   })
   @Expose()
-  public creationDate: Date;
+  public createdAt: Date;
 
   @ApiProperty({
     description: 'The uniq task ID for which the comment ',
     example: '13'
   })
   @Expose()
-  public taskId: string;
+  public taskId: number;
 
   @ApiProperty({
     description: 'The uniq user ID who left the comment ',

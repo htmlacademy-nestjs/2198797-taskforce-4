@@ -1,6 +1,8 @@
 import { Category } from "./category.interface";
 import { Comment } from "./comment.interface";
 import { Review } from "./review.interface";
+import { TaskStatus } from "./trask-status.enum";
+import { TaskCity } from "./task-cities.enum";
 
 export interface Task {
   id?: number;
@@ -12,12 +14,15 @@ export interface Task {
   picture?: string;
   address?: string;
   tags?: string[];
-  city: string;
-  status: string;
+  city: TaskCity;
+  status: TaskStatus;
   review?: Review;
   creatorId: string;
   executorId?: string;
   comments: Comment[];
   category: Category;
+  responses?: string[];
+  responsesCount?: number;
+  commentsCount?: number;
 
 }
