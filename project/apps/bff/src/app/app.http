@@ -1,0 +1,99 @@
+
+# Create a new user
+POST http://localhost:3002/api/users/create HTTP/1.1
+Content-Type: application/json
+
+{
+  "email": "user@gmail.local",
+  "dateBirth": "2002-02-22",
+  "firstname": "Keks",
+  "lastname": "Smith",
+  "city": "Moscow",
+  "password": "123456",
+  "role": "Client",
+  "specialization": ["sd", "scsac", "sacasc", "scasc", "ascc"],
+  "userInformation":"Person"
+  }
+
+###
+# Login user by email and password
+POST http://localhost:3002/api/users/login HTTP/1.1
+Content-Type: application/json
+
+{
+  "email": "user@notfound.local",
+  "password": "123456"
+}
+
+###
+
+# Update user
+PATCH http://localhost:3002/api/users/update/64ef8143783a7c56ce7be7ea HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NGVmODE0Mzc4M2E3YzU2Y2U3YmU3ZWEiLCJlbWFpbCI6InVzZXJAbm90Zm91bmQubG9jYWwiLCJyb2xlIjoiRXhlY3V0b3IiLCJsYXN0bmFtZSI6IlNtaXRoIiwiZmlyc3RuYW1lIjoiVml0YWwiLCJpYXQiOjE2OTM0MjI0NzAsImV4cCI6MTY5MzUwODg3MH0.5ctZgiMNaWzaUeY_nFJRP7Rp6JSXr3CJ9bR6acIMMr0
+Content-Type: application/json
+
+{
+  "dateBirth": "2005-02-22",
+  "firstname": "Vital",
+  "lastname": "c0manch3",
+  "city": "SaintPetersburg",
+  "specialization": ["sd", "scsac", "sacasc", "scasc"],
+  "userInformation":"Per"
+}
+
+###
+###
+# Create a new password
+POST http://localhost:3002/api/users/newpsw HTTP/1.1
+Content-Type: application/json
+
+{
+  "email": "user@notfound.local",
+  "password": "1234567",
+  "newPassword": "123456"
+}
+###
+
+# Get user by ID
+GET http://localhost:3002/api/users/64ef8143783a7c56ce7be7ea HTTP/1.1
+###---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+###---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+## Create a new task
+POST http://localhost:3002/api/tasks/create HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NGVmODE0Mzc4M2E3YzU2Y2U3YmU3ZWEiLCJlbWFpbCI6InVzZXJAbm90Zm91bmQubG9jYWwiLCJyb2xlIjoiRXhlY3V0b3IiLCJsYXN0bmFtZSI6ImMwbWFuY2gzIiwiZmlyc3RuYW1lIjoiVml0YWwiLCJpYXQiOjE2OTM1MTIwMDgsImV4cCI6MTY5MzU5ODQwOH0.7GgXm1dyfERiNoQE0RfiE-CTZ3PONooQySxETefRIb0
+Content-Type: application/json
+
+{
+  "title": "Find Cat",
+  "description": "Find the best cat in the world",
+  "category": "2",
+  "price": "10",
+  "deadline": "2023-10-22",
+  "address": "Yokogama st.",
+  "city": "SaintPetersburg",
+  "tags": ["x23","MMMM", "fcwec", "wdqwd", "wdqwd"]
+}
+
+###
+
+# Get task by ID
+GET http://localhost:3002/api/tasks/25 HTTP/1.1
+###
+
+# Update a task
+PATCH http://localhost:3002/api/tasks/update/37 HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NGVmODE0Mzc4M2E3YzU2Y2U3YmU3ZWEiLCJlbWFpbCI6InVzZXJAbm90Zm91bmQubG9jYWwiLCJyb2xlIjoiRXhlY3V0b3IiLCJsYXN0bmFtZSI6ImMwbWFuY2gzIiwiZmlyc3RuYW1lIjoiVml0YWwiLCJpYXQiOjE2OTM1MTIwMDgsImV4cCI6MTY5MzU5ODQwOH0.7GgXm1dyfERiNoQE0RfiE-CTZ3PONooQySxETefRIb0
+Content-Type: application/json
+
+{
+  "title": "Just C",
+  "deadline": "2024-12-22",
+  "tags": ["x23","r5f", "GGGG", "GGGG"]
+
+}
+###
+# Get all tasks and filtres
+GET http://localhost:3002/api/tasks?sortDirection=desc&limit=5&page=1&sortBy=commentsCount HTTP/1.1
+
+###

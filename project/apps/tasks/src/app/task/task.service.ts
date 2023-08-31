@@ -10,6 +10,7 @@ import { TaskQuery } from './query/task.query';
 import { TaskStatus } from '@project/shared/app-types';
 import { UpdateTaskStatusDto } from './dto/update-task-status.dto';
 import { AddTaskResponseDto } from './dto/add-task-response.dto';
+import { TaskSort } from '@project/shared/app-types';
 
 
 @Injectable()
@@ -21,7 +22,7 @@ export class TaskService {
 
   async create(dto: CreateTaskDto): Promise<Task> {
     const category = await this.categoryRepository.findById(dto.category);
-    const taskEntity = new TaskEntity({ ...dto, comments: [], status: TaskStatus.New, creatorId: '1234', category });
+    const taskEntity = new TaskEntity({ ...dto, comments: [], status: TaskStatus.New, category });
     return this.taskRepository.create(taskEntity);
   }
 
@@ -57,6 +58,7 @@ export class TaskService {
   }
 
   async getTasks(query: TaskQuery): Promise<Task[]> {
+    query.sortBy? query : query['sortBy'] =  TaskSort.createdAt;
     return this.taskRepository.find(query);
   }
 

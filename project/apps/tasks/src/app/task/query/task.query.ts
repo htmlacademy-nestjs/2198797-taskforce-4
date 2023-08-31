@@ -31,6 +31,7 @@ export class TaskQuery {
   @IsOptional()
   public page: number;
 
+  
   @IsOptional()
   @IsEnum(TaskSort)
   public sortBy: TaskSort;

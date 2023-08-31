@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post, HttpCode, HttpStatus, UseGuards, Patch } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, HttpCode, HttpStatus, UseGuards, Patch, Req } from '@nestjs/common';
 import { AuthenticationService } from './authentication.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UserRdo } from './rdo/user.rdo';
@@ -12,6 +12,7 @@ import { NotifyService } from '../notify/notify.service';
 import { UserValidationPipe } from './pipes/user-validate.pipe'
 import { UpdateUserDto } from './dto/update-user.dto';
 import { ChangePasswordUserDto } from './dto/change-password-user.dto';
+import { RequestWithTokenPayload } from '@project/shared/app-types';
 
 
 @ApiTags('authentication')
@@ -57,7 +58,6 @@ export class AuthenticationController {
     status: HttpStatus.OK,
     description: 'User found'
   })
-  @UseGuards(JwtAuthGuard)
   @Get(':id')
   public async show(@Param('id', MongoidValidationPipe) id: string) {
     const existUser = await this.authService.getUser(id);
@@ -83,5 +83,11 @@ export class AuthenticationController {
   public async changePsw(@Body() dto:ChangePasswordUserDto) {
     const user = await this.authService.changePassword(dto);
     return fillObject(UserRdo, user);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Post('check')
+  public async checkToken(@Req() { user: payload }: RequestWithTokenPayload) {
+    return payload;
   }
 }

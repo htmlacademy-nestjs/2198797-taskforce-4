@@ -86,8 +86,7 @@ export class CreateTaskDto {
     example: '123'
   })
   @IsString()
-  @IsOptional()
-  public creatorId?: string;
+  public creatorId: string;
 }
 
 

@@ -1,15 +1,15 @@
 # Create a new user
-POST http://localhost:3000/api/auth/register HTTP/1.1
+POST http://localhost:3003/api/auth/register HTTP/1.1
 Content-Type: application/json
 
 {
-  "email": "user@notfund.local",
+  "email": "user@found.local",
   "dateBirth": "2002-02-22",
   "firstname": "Keks",
   "lastname": "Smith",
   "city": "Moscow",
   "password": "123456",
-  "role": "Executor",
+  "role": "Client",
   "specialization": ["sd", "scsac", "sacasc", "scasc", "ascc"],
   "userInformation":"Person"
   }
@@ -17,22 +17,21 @@ Content-Type: application/json
 ###
 
 # Get user by ID
-GET http://localhost:3000/api/auth/64e39d88327a9cfcbea633f6 HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NGUzOWQ4ODMyN2E5Y2ZjYmVhNjMzZjYiLCJlbWFpbCI6InVzZXJAbm90Zm91bmQubG9jYWwiLCJyb2xlIjoiY2xpZW50IiwibGFzdG5hbWUiOiJTbWl0aCIsImZpcnN0bmFtZSI6Iktla3MiLCJpYXQiOjE2OTM0MDY5ODcsImV4cCI6MTY5MzQ5MzM4N30.821RJDkm5h2dIaElLI4wBgj4I9VyuG8l040dlGGYBQE
+GET http://localhost:3003/api/auth/64ef8143783a7c56ce7be7ea HTTP/1.1
 ###
 
 # Login user by email and password
-POST http://localhost:3000/api/auth/login HTTP/1.1
+POST http://localhost:3003/api/auth/login HTTP/1.1
 Content-Type: application/json
 
 {
-  "email": "user@notfound.local",
+  "email": "user@found.local",
   "password": "123456"
 }
 
 ###
 # Update user
-PATCH http://localhost:3000/api/auth/update/64ef8143783a7c56ce7be7ea HTTP/1.1
+PATCH http://localhost:3003/api/auth/update/64ef8143783a7c56ce7be7ea HTTP/1.1
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NGVmODE0Mzc4M2E3YzU2Y2U3YmU3ZWEiLCJlbWFpbCI6InVzZXJAbm90Zm91bmQubG9jYWwiLCJyb2xlIjoiRXhlY3V0b3IiLCJsYXN0bmFtZSI6IlNtaXRoIiwiZmlyc3RuYW1lIjoiVml0YWwiLCJpYXQiOjE2OTM0MjI0NzAsImV4cCI6MTY5MzUwODg3MH0.5ctZgiMNaWzaUeY_nFJRP7Rp6JSXr3CJ9bR6acIMMr0
 Content-Type: application/json
 
@@ -47,7 +46,7 @@ Content-Type: application/json
 
 ###
 # Create a new password
-POST http://localhost:3000/api/auth/register HTTP/1.1
+POST http://localhost:3003/api/auth/newpsw HTTP/1.1
 Content-Type: application/json
 
 {
@@ -55,6 +54,10 @@ Content-Type: application/json
   "password": "123456",
   "newPassword": "1234567"
 }
+###
 
 
+# Check user token
+POST http://localhost:3003/api/auth/check HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NGVmODE0Mzc4M2E3YzU2Y2U3YmU3ZWEiLCJlbWFpbCI6InVzZXJAbm90Zm91bmQubG9jYWwiLCJyb2xlIjoiRXhlY3V0b3IiLCJsYXN0bmFtZSI6IlNtaXRoIiwiZmlyc3RuYW1lIjoiVml0YWwiLCJpYXQiOjE2OTM0MjI0NzAsImV4cCI6MTY5MzUwODg3MH0.5ctZgiMNaWzaUeY_nFJRP7Rp6JSXr3CJ9bR6acIMMr0
 ###

@@ -1,7 +1,6 @@
 import { PipeTransform, Injectable, BadRequestException} from '@nestjs/common';
 import { Task } from '@project/shared/app-types';
 
-const MIN_TAGS_NUMBER = 1;
 const MAX_TAGS_NUMBER = 5;
 
 @Injectable()
@@ -9,7 +8,7 @@ export class TaskTagPipe implements PipeTransform {
 
   async transform(value: Task) {
 
-    if(value.tags.length < MIN_TAGS_NUMBER){
+    if(!value.tags){
       return value;
     }
     if(value.tags.length > MAX_TAGS_NUMBER){

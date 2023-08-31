@@ -1,5 +1,5 @@
 # Create a new task
-POST http://localhost:3000/api/tasks/create HTTP/1.1ßß
+POST http://localhost:3000/api/tasks/create HTTP/1.1
 Content-Type: application/json
 
 {
@@ -11,7 +11,7 @@ Content-Type: application/json
   "address": "Yokogama st.",
   "city": "SaintPetersburg",
   "tags": ["x23","MMMM", "fcwec", "wdqwd", "wdqwd"],
-  "creatorId": "13"
+  "creatorId": "64f0da92fadc115baf083e7b"
 }
 
 ###
@@ -22,18 +22,19 @@ GET http://localhost:3000/api/tasks/2 HTTP/1.1
 ###
 # Update a task
 PATCH http://localhost:3000/api/tasks/update/3 HTTP/1.1
-Content-Type: application/jsonß
+Content-Type: application/json
 
 {
   "title": "Just Cat",
   "deadline": "2024-12-22",
-  "tags": ["x23","r5f", "GGGG", "GGGG", "wdqwd"]
+  "tags": ["x23","r5f", "GGGG", "GGGG"]
+
 }
 
 ###
 
 # Get all tasks and filtres
-GET http://localhost:3000/api/tasks?sortDirection=desc&limit=5&page=1&sortBy=commentsCount HTTP/1.1
+GET http://localhost:3000/api/tasks?sortDirection=desc&limit=5&page=1&sortBy=commentsCount&catigories=1,2 HTTP/1.1
 
 ###
 # Change task-status
