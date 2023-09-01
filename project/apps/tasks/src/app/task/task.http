@@ -38,12 +38,13 @@ GET http://localhost:3000/api/tasks?sortDirection=desc&limit=5&page=1&sortBy=com
 
 ###
 # Change task-status
-PATCH http://localhost:3000/api/tasks/status HTTP/1.1
+PATCH http://localhost:3000/api/tasks/status/45 HTTP/1.1
 Content-Type: application/json
 
 {
-  "id": "2",
-  "status": "New"
+  "status": "InWork",
+  "executorId": "64f1d75b2c2a518a47c72260"
+  
 }
 
 ###
@@ -52,10 +53,10 @@ GET http://localhost:3000/api/tasks/new HTTP/1.1
 
 ###
 # Add new response
-PATCH http://localhost:3000/api/tasks/response/3 HTTP/1.1
+PATCH http://localhost:3000/api/tasks/response/45 HTTP/1.1
 Content-Type: application/json
 
 {
-  "executorId": "12"
+  "executorId": "64f1d75b2c2a518a47c72260"
 }
 ###

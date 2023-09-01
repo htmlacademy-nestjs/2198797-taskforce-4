@@ -5,6 +5,8 @@ import { UsersController } from './users.controller';
 import { HttpModule } from '@nestjs/axios';
 import { HTTP_CLIENT_MAX_REDIRECTS, HTTP_CLIENT_TIMEOUT } from './app.config';
 import { CheckAuthGuard } from './guards/check-auth.guard';
+import { CommentController } from './comments.controller';
+import { ReviewController } from './review.controller';
 
 
 @Module({
@@ -16,7 +18,9 @@ import { CheckAuthGuard } from './guards/check-auth.guard';
   ],
   controllers: [
     TasksController,
-    UsersController
+    UsersController,
+    CommentController,
+    ReviewController
   ],
   providers: [CheckAuthGuard],
 })

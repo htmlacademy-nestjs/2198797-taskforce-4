@@ -1,4 +1,4 @@
-import { Body, Controller, Get, HttpStatus, Param, Patch, Post, Query} from '@nestjs/common';
+import { Body, Controller, Get, HttpStatus, Param, Patch, Post, Query, UseInterceptors} from '@nestjs/common';
 import { TaskService } from './task.service';
 import { TaskRdo } from './rdo/task.rdo';
 import { CreateTaskDto } from './dto/create-task.dto';
@@ -6,10 +6,10 @@ import { fillObject } from '@project/util/util-core';
 import { UpdateTaskDto } from './dto/update-task.dto';
 import { ApiResponse, ApiTags } from '@nestjs/swagger';
 import { TaskQuery } from './query/task.query';
-import { TaskStatusPipe } from './pipes/task-status.pipe';
 import { UpdateTaskStatusDto } from './dto/update-task-status.dto';
 import { TaskTagPipe } from './pipes/task-tag.pipe';
 import { AddTaskResponseDto } from './dto/add-task-response.dto';
+import { TaskStatusInterseptor } from './interceptors/task-status.interceptor';
 
 
 @ApiTags('tasks')
@@ -71,9 +71,10 @@ export class TaskController {
     return fillObject(TaskRdo, tasks);
   }
 
-  @Patch('status')
-  public async changeStatus(@Body(TaskStatusPipe) dto: UpdateTaskStatusDto) {
-    const task = await this.taskService.updateTaskStatus(dto);
+  @UseInterceptors(TaskStatusInterseptor)
+  @Patch('status/:id')
+  public async changeStatus(@Body() dto: UpdateTaskStatusDto, @Param('id') id: number) {
+    const task = await this.taskService.updateTaskStatus(id, dto);
     return fillObject(TaskRdo, task);
   }
 

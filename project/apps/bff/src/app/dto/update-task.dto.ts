@@ -2,7 +2,8 @@ import { ApiProperty } from '@nestjs/swagger';
 import { TaskCity } from '@project/shared/app-types';
 
 
-export class CreateNewTaskDto {
+
+export class UpdateTaskDto {
 
   @ApiProperty({
     description: 'Task name',
@@ -26,7 +27,7 @@ export class CreateNewTaskDto {
     description: 'Task deadline',
     example: '2024-03-12'
   })
-  public deadline: Date;
+  public deadline?: Date;
 
   @ApiProperty({
     description: 'Task picture',
@@ -50,11 +51,8 @@ export class CreateNewTaskDto {
     description: 'Task city(SaintPetersburg, Moscow, Vladivostok)',
     example: 'SaintPetersburg'
   })
-  public city: TaskCity;
+  public city?: TaskCity;
 
-  @ApiProperty({
-    description: 'Task category id',
-    example: '14'
-  })
-  public category: number;
+  public executorId?: string;
+
 }

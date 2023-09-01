@@ -1,7 +1,7 @@
 import { Body, Controller, Get, Param, Patch, Post, Req, UseFilters } from '@nestjs/common';
 import { ApplicationServiceURL } from './app.config';
 import { LoginUserDto } from './dto/login-user.dto';
-import { CreateUserDto } from './dto/crete-new-user.dto';
+import { CreateUserDto } from './dto/crete-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { CreateNewPswDto } from './dto/crete_new-user-psw.dto';
 import { HttpService } from '@nestjs/axios';

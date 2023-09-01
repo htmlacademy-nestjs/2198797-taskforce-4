@@ -1,10 +1,12 @@
-
+###---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+###-----------------------------------------------------------------------------------------------------------------------------------------------------USERS--------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+###---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 # Create a new user
 POST http://localhost:3002/api/users/create HTTP/1.1
 Content-Type: application/json
 
 {
-  "email": "user@gmail.local",
+  "email": "executort@gmail.local",
   "dateBirth": "2002-02-22",
   "firstname": "Keks",
   "lastname": "Smith",
@@ -21,7 +23,7 @@ POST http://localhost:3002/api/users/login HTTP/1.1
 Content-Type: application/json
 
 {
-  "email": "user@notfound.local",
+  "email": "client@gmail.local",
   "password": "123456"
 }
 
@@ -57,11 +59,12 @@ Content-Type: application/json
 # Get user by ID
 GET http://localhost:3002/api/users/64ef8143783a7c56ce7be7ea HTTP/1.1
 ###---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+###-----------------------------------------------------------------------------------------------------------------------------------------------------TASKS--------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 ###---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 ## Create a new task
 POST http://localhost:3002/api/tasks/create HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NGVmODE0Mzc4M2E3YzU2Y2U3YmU3ZWEiLCJlbWFpbCI6InVzZXJAbm90Zm91bmQubG9jYWwiLCJyb2xlIjoiRXhlY3V0b3IiLCJsYXN0bmFtZSI6ImMwbWFuY2gzIiwiZmlyc3RuYW1lIjoiVml0YWwiLCJpYXQiOjE2OTM1MTIwMDgsImV4cCI6MTY5MzU5ODQwOH0.7GgXm1dyfERiNoQE0RfiE-CTZ3PONooQySxETefRIb0
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NGYxZDA5NDJjMmE1MThhNDdjNzIyNTciLCJlbWFpbCI6ImNsaWVudEBnbWFpbC5sb2NhbCIsInJvbGUiOiJDbGllbnQiLCJsYXN0bmFtZSI6IlNtaXRoIiwiZmlyc3RuYW1lIjoiS2VrcyIsImlhdCI6MTY5MzU2OTE5NywiZXhwIjoxNjkzNjU1NTk3fQ.kZQrGRE0MIqquuFe3emLNp6IxJvGgKCLghGvp2rM_wY
 Content-Type: application/json
 
 {
@@ -78,7 +81,7 @@ Content-Type: application/json
 ###
 
 # Get task by ID
-GET http://localhost:3002/api/tasks/25 HTTP/1.1
+GET http://localhost:3002/api/tasks/45 HTTP/1.1
 ###
 
 # Update a task
@@ -95,5 +98,60 @@ Content-Type: application/json
 ###
 # Get all tasks and filtres
 GET http://localhost:3002/api/tasks?sortDirection=desc&limit=5&page=1&sortBy=commentsCount HTTP/1.1
+
+###
+# Change task-status
+PATCH http://localhost:3002/api/tasks/status/46 HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NGYxZDA5NDJjMmE1MThhNDdjNzIyNTciLCJlbWFpbCI6ImNsaWVudEBnbWFpbC5sb2NhbCIsInJvbGUiOiJDbGllbnQiLCJsYXN0bmFtZSI6IlNtaXRoIiwiZmlyc3RuYW1lIjoiS2VrcyIsImlhdCI6MTY5MzU2OTE5NywiZXhwIjoxNjkzNjU1NTk3fQ.kZQrGRE0MIqquuFe3emLNp6IxJvGgKCLghGvp2rM_wY
+Content-Type: application/json
+
+{
+  "status": "InWork",
+  "executorId": "1"
+  
+}
+
+###
+# Get all new tasks
+GET http://localhost:3002/api/tasks/new HTTP/1.1
+
+###
+# Add new response
+POST http://localhost:3002/api/tasks/response/46 HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NGYxZDA5NDJjMmE1MThhNDdjNzIyNTciLCJlbWFpbCI6ImNsaWVudEBnbWFpbC5sb2NhbCIsInJvbGUiOiJDbGllbnQiLCJsYXN0bmFtZSI6IlNtaXRoIiwiZmlyc3RuYW1lIjoiS2VrcyIsImlhdCI6MTY5MzU2OTE5NywiZXhwIjoxNjkzNjU1NTk3fQ.kZQrGRE0MIqquuFe3emLNp6IxJvGgKCLghGvp2rM_wY
+###---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+###-----------------------------------------------------------------------------------------------------------------------------------------------------COMMENTS--------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+###---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+# Create a new comment
+POST http://localhost:3002/api/comments/create HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NGYxZDA5NDJjMmE1MThhNDdjNzIyNTciLCJlbWFpbCI6ImNsaWVudEBnbWFpbC5sb2NhbCIsInJvbGUiOiJDbGllbnQiLCJsYXN0bmFtZSI6IlNtaXRoIiwiZmlyc3RuYW1lIjoiS2VrcyIsImlhdCI6MTY5MzU2OTE5NywiZXhwIjoxNjkzNjU1NTk3fQ.kZQrGRE0MIqquuFe3emLNp6IxJvGgKCLghGvp2rM_wY
+Content-Type: application/json
+
+{
+  "message": "Heloooooooooo",
+  "taskId": "46"
+}
+###
+# Get comment by ID
+GET http://localhost:3002/api/comments/5 HTTP/1.1
+
+###
+# Get all comments and filtres
+GET http://localhost:3002/api/comments?limit=3&page=2 HTTP/1.1
+
+###---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+###-----------------------------------------------------------------------------------------------------------------------------------------------------REVIEWS--------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+###---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+# Create a new review
+POST http://localhost:3002/api/reviews/create/47 HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NGYxZDA5NDJjMmE1MThhNDdjNzIyNTciLCJlbWFpbCI6ImNsaWVudEBnbWFpbC5sb2NhbCIsInJvbGUiOiJDbGllbnQiLCJsYXN0bmFtZSI6IlNtaXRoIiwiZmlyc3RuYW1lIjoiS2VrcyIsImlhdCI6MTY5MzU2OTE5NywiZXhwIjoxNjkzNjU1NTk3fQ.kZQrGRE0MIqquuFe3emLNp6IxJvGgKCLghGvp2rM_wY
+Content-Type: application/json
+
+{
+  "message": "Super",
+  "grade": "5"
+}
 
 ###

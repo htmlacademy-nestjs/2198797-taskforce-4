@@ -62,15 +62,14 @@ export class TaskService {
     return this.taskRepository.find(query);
   }
 
-  public async updateTaskStatus(dto: UpdateTaskStatusDto) {
-    const existTask = await this.taskRepository.findById(dto.id);
+  public async updateTaskStatus(id: number, dto: UpdateTaskStatusDto) {
+    const existTask = await this.taskRepository.findById(id);
 
     if (!existTask) {
       throw new NotFoundException(TASK_NOT_FOUND);
     }
-    const newTaskEntity = new TaskEntity({ ...existTask, status: dto.status });
-
-    return await this.taskRepository.update(dto.id, newTaskEntity);
+    const newTaskEntity = new TaskEntity({ ...existTask, status: dto.status, executorId: dto.executorId });
+    return await this.taskRepository.update(id, newTaskEntity);
   }
 
   public async getNewTasks(): Promise<Task[]> {

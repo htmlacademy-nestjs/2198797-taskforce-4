@@ -22,7 +22,7 @@ async function bootstrap() {
 
   const globalPrefix = 'api';
   app.setGlobalPrefix(globalPrefix);
-  const port = process.env.PORT || 3001;
+  const port = process.env.PORT || 3004;
 
   app.useGlobalPipes(new ValidationPipe({transform: true}));
   

@@ -1,5 +1,5 @@
 import { HttpService } from '@nestjs/axios';
-import {BadRequestException, CallHandler, ExecutionContext, Injectable, NestInterceptor, ParseUUIDPipe } from '@nestjs/common';
+import {BadRequestException, CallHandler, ExecutionContext, Injectable, NestInterceptor} from '@nestjs/common';
 import { ApplicationServiceURL } from '../app.config';
 
 

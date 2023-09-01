@@ -15,10 +15,9 @@ export class ReviewController {
     return fillObject(ReviewRdo, existReview);
   }
 
-  @Post('/create')
-  async create(@Body() dto: CreateReviewDto) {
-    console.log(dto);
-    const newReview = await this.reviewService.createReview(dto);
+  @Post('/create/:id')
+  async create(@Body() dto: CreateReviewDto, @Param('id') taskId: number) {
+    const newReview = await this.reviewService.createReview(taskId, dto);
     return fillObject(ReviewRdo, newReview);
   }
 

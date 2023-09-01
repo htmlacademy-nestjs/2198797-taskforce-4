@@ -17,7 +17,7 @@ export class TaskEntity implements Entity<TaskEntity>, Task {
   public city: TaskCity;
   public status: TaskStatus;
   public creatorId: string;
-  public executorId?: string;
+  public executorId: string;
   public comments: Comment[];
   public category: Category;
   public review: Review;
@@ -37,6 +37,7 @@ export class TaskEntity implements Entity<TaskEntity>, Task {
     this.tags = task.tags;
     this.status = task.status;
     this.creatorId = task.creatorId;
+    this.executorId = task.executorId;
     this.comments = [];
     this.category = task.category;
     this.review = task.review;
