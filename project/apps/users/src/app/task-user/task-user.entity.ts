@@ -34,7 +34,7 @@ export class TaskUserEntity implements User {
       role: this.role,
       specialization: this.specialization,
       userInformation: this.userInformation,
-      createdAt: this.createdAt
+      createdAt: this.createdAt,
     };
   }
 

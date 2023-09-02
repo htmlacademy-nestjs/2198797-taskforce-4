@@ -6,6 +6,11 @@ import { UpdateUserDto } from './dto/update-user.dto';
 import { CreateNewPswDto } from './dto/crete_new-user-psw.dto';
 import { HttpService } from '@nestjs/axios';
 import { AxiosExceptionFilter } from './filters/axios-exception.filter';
+import { UserRole } from '@project/shared/app-types';
+import { fillObject } from '@project/util/util-core';
+import { ClientRdo } from './rdo/client.rdo';
+import { ExecutorRdo } from './rdo/executor.rdo';
+
 
 @Controller('users')
 export class UsersController {
@@ -50,7 +55,17 @@ export class UsersController {
   @Get(':id')
   @UseFilters(AxiosExceptionFilter)
   public async getUser(@Param('id') id: string) {
-    const { data } = await this.httpService.axiosRef.get(`${ApplicationServiceURL.Users}/${id}`);
-    return data;
+    let {data} = await this.httpService.axiosRef.get(`${ApplicationServiceURL.Users}/${id}`);
+    let resp;
+    if(data.role === UserRole.Client){
+      const clientInfo = await this.httpService.axiosRef.get(`${ApplicationServiceURL.Tasks}/client/info/${id}`);
+      data = {...data, ...clientInfo.data};
+      resp  = fillObject(ClientRdo,{...data, ...clientInfo.data});
+    }
+    if(data.role === UserRole.Executor){
+      const executorInfo = await this.httpService.axiosRef.get(`${ApplicationServiceURL.Tasks}/executor/info/${id}`);
+      resp  = fillObject(ExecutorRdo,{...data, ...executorInfo.data});
+    }
+    return resp;
   }
 }

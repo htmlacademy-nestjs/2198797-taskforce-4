@@ -15,6 +15,7 @@ import { ChangePasswordUserDto } from './dto/change-password-user.dto';
 import { RequestWithTokenPayload } from '@project/shared/app-types';
 
 
+
 @ApiTags('authentication')
 @Controller('auth')
 export class AuthenticationController {
@@ -90,4 +91,5 @@ export class AuthenticationController {
   public async checkToken(@Req() { user: payload }: RequestWithTokenPayload) {
     return payload;
   }
+
 }

@@ -6,13 +6,13 @@ POST http://localhost:3002/api/users/create HTTP/1.1
 Content-Type: application/json
 
 {
-  "email": "executort@gmail.local",
+  "email": "exec@gmail.local",
   "dateBirth": "2002-02-22",
   "firstname": "Keks",
   "lastname": "Smith",
   "city": "Moscow",
   "password": "123456",
-  "role": "Client",
+  "role": "Executor",
   "specialization": ["sd", "scsac", "sacasc", "scasc", "ascc"],
   "userInformation":"Person"
   }
@@ -57,20 +57,20 @@ Content-Type: application/json
 ###
 
 # Get user by ID
-GET http://localhost:3002/api/users/64ef8143783a7c56ce7be7ea HTTP/1.1
+GET http://localhost:3002/api/users/64f34de1fce8e56ae10a620b HTTP/1.1
 ###---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 ###-----------------------------------------------------------------------------------------------------------------------------------------------------TASKS--------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 ###---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 ## Create a new task
 POST http://localhost:3002/api/tasks/create HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NGYxZDA5NDJjMmE1MThhNDdjNzIyNTciLCJlbWFpbCI6ImNsaWVudEBnbWFpbC5sb2NhbCIsInJvbGUiOiJDbGllbnQiLCJsYXN0bmFtZSI6IlNtaXRoIiwiZmlyc3RuYW1lIjoiS2VrcyIsImlhdCI6MTY5MzU2OTE5NywiZXhwIjoxNjkzNjU1NTk3fQ.kZQrGRE0MIqquuFe3emLNp6IxJvGgKCLghGvp2rM_wY
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NGYzMWM5ZDRkNzcyMWVhYTE1ZWZhNjAiLCJlbWFpbCI6ImNsaWVudEBnbWFpbC5sb2NhbCIsInJvbGUiOiJDbGllbnQiLCJsYXN0bmFtZSI6IlNtaXRoIiwiZmlyc3RuYW1lIjoiS2VrcyIsImlhdCI6MTY5MzY1NDE5MCwiZXhwIjoxNjkzNzQwNTkwfQ.cUXI_f8C0yKuOdb9lzbzG7TKrh39v5iETa01IGgO-PA
 Content-Type: application/json
 
 {
   "title": "Find Cat",
   "description": "Find the best cat in the world",
-  "category": "2",
+  "category": "1",
   "price": "10",
   "deadline": "2023-10-22",
   "address": "Yokogama st.",
@@ -81,7 +81,17 @@ Content-Type: application/json
 ###
 
 # Get task by ID
-GET http://localhost:3002/api/tasks/45 HTTP/1.1
+GET http://localhost:3002/api/tasks/2 HTTP/1.1
+###
+
+# Get all New tasks and filtres
+POST http://localhost:3002/api/tasks/new?sortDirection=desc&limit=5&page=1&sortBy=commentsCount HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NGYzNGRlMWZjZThlNTZhZTEwYTYyMGIiLCJlbWFpbCI6ImV4ZWNAZ21haWwubG9jYWwiLCJyb2xlIjoiRXhlY3V0b3IiLCJsYXN0bmFtZSI6IlNtaXRoIiwiZmlyc3RuYW1lIjoiS2VrcyIsImlhdCI6MTY5MzY2NjgwNCwiZXhwIjoxNjkzNzUzMjA0fQ.F3UJthQPsi10R-n3W63cYG-28aJLcSsW3XDZMSueFV0
+###
+
+# Get all user tasks 
+POST http://localhost:3002/api/tasks HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NGYzNGRlMWZjZThlNTZhZTEwYTYyMGIiLCJlbWFpbCI6ImV4ZWNAZ21haWwubG9jYWwiLCJyb2xlIjoiRXhlY3V0b3IiLCJsYXN0bmFtZSI6IlNtaXRoIiwiZmlyc3RuYW1lIjoiS2VrcyIsImlhdCI6MTY5MzY2NjgwNCwiZXhwIjoxNjkzNzUzMjA0fQ.F3UJthQPsi10R-n3W63cYG-28aJLcSsW3XDZMSueFV0
 ###
 
 # Update a task
@@ -96,29 +106,27 @@ Content-Type: application/json
 
 }
 ###
-# Get all tasks and filtres
-GET http://localhost:3002/api/tasks?sortDirection=desc&limit=5&page=1&sortBy=commentsCount HTTP/1.1
 
-###
 # Change task-status
-PATCH http://localhost:3002/api/tasks/status/46 HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NGYxZDA5NDJjMmE1MThhNDdjNzIyNTciLCJlbWFpbCI6ImNsaWVudEBnbWFpbC5sb2NhbCIsInJvbGUiOiJDbGllbnQiLCJsYXN0bmFtZSI6IlNtaXRoIiwiZmlyc3RuYW1lIjoiS2VrcyIsImlhdCI6MTY5MzU2OTE5NywiZXhwIjoxNjkzNjU1NTk3fQ.kZQrGRE0MIqquuFe3emLNp6IxJvGgKCLghGvp2rM_wY
+PATCH http://localhost:3002/api/tasks/status/10 HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NGYzMWM5ZDRkNzcyMWVhYTE1ZWZhNjAiLCJlbWFpbCI6ImNsaWVudEBnbWFpbC5sb2NhbCIsInJvbGUiOiJDbGllbnQiLCJsYXN0bmFtZSI6IlNtaXRoIiwiZmlyc3RuYW1lIjoiS2VrcyIsImlhdCI6MTY5MzY1NDE5MCwiZXhwIjoxNjkzNzQwNTkwfQ.cUXI_f8C0yKuOdb9lzbzG7TKrh39v5iETa01IGgO-PA
 Content-Type: application/json
 
 {
-  "status": "InWork",
-  "executorId": "1"
+  "status": "Done",
+  "executorId": "64f34de1fce8e56ae10a620b"
   
 }
 
 ###
-# Get all new tasks
-GET http://localhost:3002/api/tasks/new HTTP/1.1
-
-###
 # Add new response
-POST http://localhost:3002/api/tasks/response/46 HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NGYxZDA5NDJjMmE1MThhNDdjNzIyNTciLCJlbWFpbCI6ImNsaWVudEBnbWFpbC5sb2NhbCIsInJvbGUiOiJDbGllbnQiLCJsYXN0bmFtZSI6IlNtaXRoIiwiZmlyc3RuYW1lIjoiS2VrcyIsImlhdCI6MTY5MzU2OTE5NywiZXhwIjoxNjkzNjU1NTk3fQ.kZQrGRE0MIqquuFe3emLNp6IxJvGgKCLghGvp2rM_wY
+POST http://localhost:3002/api/tasks/response/10 HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NGYzNGRlMWZjZThlNTZhZTEwYTYyMGIiLCJlbWFpbCI6ImV4ZWNAZ21haWwubG9jYWwiLCJyb2xlIjoiRXhlY3V0b3IiLCJsYXN0bmFtZSI6IlNtaXRoIiwiZmlyc3RuYW1lIjoiS2VrcyIsImlhdCI6MTY5MzY2NjgwNCwiZXhwIjoxNjkzNzUzMjA0fQ.F3UJthQPsi10R-n3W63cYG-28aJLcSsW3XDZMSueFV0
+###
+# Delete task by Id
+POST http://localhost:3002/api/tasks/delete/5 HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NGYzMWM5ZDRkNzcyMWVhYTE1ZWZhNjAiLCJlbWFpbCI6ImNsaWVudEBnbWFpbC5sb2NhbCIsInJvbGUiOiJDbGllbnQiLCJsYXN0bmFtZSI6IlNtaXRoIiwiZmlyc3RuYW1lIjoiS2VrcyIsImlhdCI6MTY5MzY1NDE5MCwiZXhwIjoxNjkzNzQwNTkwfQ.cUXI_f8C0yKuOdb9lzbzG7TKrh39v5iETa01IGgO-PA
+####
 ###---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 ###-----------------------------------------------------------------------------------------------------------------------------------------------------COMMENTS--------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 ###---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -129,8 +137,8 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NGYxZDA5N
 Content-Type: application/json
 
 {
-  "message": "Heloooooooooo",
-  "taskId": "46"
+  "message": "Heloooooooooo!!!",
+  "taskId": "47"
 }
 ###
 # Get comment by ID
@@ -145,13 +153,28 @@ GET http://localhost:3002/api/comments?limit=3&page=2 HTTP/1.1
 ###---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 # Create a new review
-POST http://localhost:3002/api/reviews/create/47 HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NGYxZDA5NDJjMmE1MThhNDdjNzIyNTciLCJlbWFpbCI6ImNsaWVudEBnbWFpbC5sb2NhbCIsInJvbGUiOiJDbGllbnQiLCJsYXN0bmFtZSI6IlNtaXRoIiwiZmlyc3RuYW1lIjoiS2VrcyIsImlhdCI6MTY5MzU2OTE5NywiZXhwIjoxNjkzNjU1NTk3fQ.kZQrGRE0MIqquuFe3emLNp6IxJvGgKCLghGvp2rM_wY
+POST http://localhost:3002/api/reviews/create/10 HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NGYzMWM5ZDRkNzcyMWVhYTE1ZWZhNjAiLCJlbWFpbCI6ImNsaWVudEBnbWFpbC5sb2NhbCIsInJvbGUiOiJDbGllbnQiLCJsYXN0bmFtZSI6IlNtaXRoIiwiZmlyc3RuYW1lIjoiS2VrcyIsImlhdCI6MTY5MzY1NDE5MCwiZXhwIjoxNjkzNzQwNTkwfQ.cUXI_f8C0yKuOdb9lzbzG7TKrh39v5iETa01IGgO-PA
 Content-Type: application/json
 
 {
   "message": "Super",
-  "grade": "5"
+  "grade": "4"
 }
+
+###---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+###-----------------------------------------------------------------------------------------------------------------------------------------------------CATEGORY--------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+###---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+# Create new caterory
+POST http://localhost:3002/api/categories/create HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NGYzNGRlMWZjZThlNTZhZTEwYTYyMGIiLCJlbWFpbCI6ImV4ZWNAZ21haWwubG9jYWwiLCJyb2xlIjoiRXhlY3V0b3IiLCJsYXN0bmFtZSI6IlNtaXRoIiwiZmlyc3RuYW1lIjoiS2VrcyIsImlhdCI6MTY5MzY2NjgwNCwiZXhwIjoxNjkzNzUzMjA0fQ.F3UJthQPsi10R-n3W63cYG-28aJLcSsW3XDZMSueFV0
+Content-Type: application/json
+
+{
+  "title": "pats"
+}
+###
+# Get all categories
+GET http://localhost:3002/api/categories HTTP/1.1
 
 ###

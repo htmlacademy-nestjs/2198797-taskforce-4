@@ -10,6 +10,7 @@ import { TokenPayload, User } from '@project/shared/app-types';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { ChangePasswordUserDto } from './dto/change-password-user.dto';
 
+
 @Injectable()
 export class AuthenticationService {
   constructor(
@@ -77,7 +78,7 @@ export class AuthenticationService {
     if (!existUser) {
       throw new ConflictException(AUTH_USER_NOT_FOUND);
     }
-    const userEntity = new TaskUserEntity({...existUser, ...dto});
+    const userEntity = new TaskUserEntity({ ...existUser, ...dto });
     return this.taskUserRepository.update(id, userEntity);
   }
 
@@ -93,7 +94,7 @@ export class AuthenticationService {
     if (!await taskUserEntity.comparePassword(password)) {
       throw new UnauthorizedException(AUTH_USER_PASSWORD_WRONG);
     }
-  
+
     const userEntity = await new TaskUserEntity(existUser).setPassword(newPassword);
     return this.taskUserRepository.update(userEntity._id, userEntity);
   }

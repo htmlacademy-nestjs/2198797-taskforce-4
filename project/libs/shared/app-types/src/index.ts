@@ -12,3 +12,5 @@ export * from './lib/rabbit-routing.enum';
 export * from './lib/task-cities.enum';
 export * from './lib/task-sort.enum';
 export * from './lib/request-with-token-payload';
+export * from './lib/executor.interface';
+export * from './lib/client.interface';

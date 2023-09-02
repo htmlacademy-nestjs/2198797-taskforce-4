@@ -33,8 +33,8 @@ Content-Type: application/json
 
 ###
 
-# Get all tasks and filtres
-GET http://localhost:3000/api/tasks?sortDirection=desc&limit=5&page=1&sortBy=commentsCount&catigories=1,2 HTTP/1.1
+# Get all New tasks and filtres
+GET http://localhost:3000/api/tasks/new?sortDirection=desc&limit=5&page=1&sortBy=commentsCount&catigories=1,2 HTTP/1.1
 
 ###
 # Change task-status
@@ -59,4 +59,20 @@ Content-Type: application/json
 {
   "executorId": "64f1d75b2c2a518a47c72260"
 }
+###
+# Get executor info
+GET http://localhost:3000/api/tasks/executorrait/64f31d9c4d7721eaa15efa67 HTTP/1.1
+
+###
+# Get client info
+GET http://localhost:3000/api/tasks/clientinfo/64f31c9d4d7721eaa15efa60 HTTP/1.1
+
+###
+# Get all client tasks
+GET http://localhost:3000/api/tasks/clienttasks/64f31c9d4d7721eaa15efa60 HTTP/1.1
+
+###
+# Get all executor tasks
+GET http://localhost:3000/api/tasks/executortasks/64f31d9c4d7721eaa15efa67 HTTP/1.1
+
 ###

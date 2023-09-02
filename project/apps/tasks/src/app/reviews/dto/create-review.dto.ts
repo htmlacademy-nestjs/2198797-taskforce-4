@@ -1,8 +1,11 @@
 import { Transform } from "class-transformer";
-import { IsInt, Max, Min } from 'class-validator';
+import { IsInt, IsString, Length, Max, Min } from 'class-validator';
 
 
 export class CreateReviewDto {
+
+  @IsString()
+  @Length(3, 50)
   public message: string;
 
   @Max(5)

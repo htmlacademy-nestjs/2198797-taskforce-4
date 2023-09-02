@@ -2,7 +2,7 @@ import { Body, Controller, Param, Post, UseFilters, UseGuards, UseInterceptors }
 import { AxiosExceptionFilter } from "./filters/axios-exception.filter";
 import { HttpService } from "@nestjs/axios";
 import { CheckAuthGuard } from "./guards/check-auth.guard";
-import { PermisionInterseptor } from "./interseptors/permision.interceptor";
+import { ReviewPermisionInterseptor } from "./interseptors/review.permision.interceptor";
 import { CreateReviewDto } from "./dto/crete-review.dto";
 import { ApplicationServiceURL } from "./app.config";
 
@@ -15,7 +15,7 @@ export class ReviewController {
   ) {}
 
   @UseGuards(CheckAuthGuard)
-  @UseInterceptors(PermisionInterseptor)
+  @UseInterceptors(ReviewPermisionInterseptor)
   @Post('create/:id')
   public async create(@Body() dto: CreateReviewDto, @Param('id') id: string) {
     const { data } = await this.httpService.axiosRef.post(`${ApplicationServiceURL.Reviews}/create/${id}`, dto);

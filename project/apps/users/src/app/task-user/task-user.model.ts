@@ -61,6 +61,7 @@ export class TaskUserModel extends Document implements User {
   })
   public userInformation: string;
 
+
 }
 
 

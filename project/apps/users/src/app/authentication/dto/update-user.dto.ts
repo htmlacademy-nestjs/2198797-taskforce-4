@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { ArrayMaxSize, IsArray, IsDate, IsEnum, IsOptional, IsString, Length } from 'class-validator'
+import { ArrayMaxSize, IsArray, IsDate, IsEnum, IsIn, IsInt, IsOptional, IsString, Length, Max, Min } from 'class-validator'
 import { AUTH_USER_DATE_BIRTH_NOT_VALID } from '../authentication.constant';
 import { Transform } from 'class-transformer';
 import { TaskCity } from '@project/shared/app-types';
@@ -13,6 +13,7 @@ export class UpdateUserDto {
   })
   @IsDate({ message: AUTH_USER_DATE_BIRTH_NOT_VALID })
   @Transform(({ value }) => new Date(value))
+  @IsOptional()
   public dateBirth: Date;
 
   @ApiProperty({
@@ -20,6 +21,7 @@ export class UpdateUserDto {
     example: 'St. Petersburg',
   })
   @IsEnum(TaskCity)
+  @IsOptional()
   public city: TaskCity;
 
   @ApiProperty({
@@ -28,6 +30,7 @@ export class UpdateUserDto {
   })
   @IsString()
   @Length(3, 50)
+  @IsOptional()
   public firstname: string;
 
   @ApiProperty({
@@ -36,6 +39,7 @@ export class UpdateUserDto {
   })
   @IsString()
   @Length(3, 50)
+  @IsOptional()
   public lastname: string;
 
   @IsArray()
@@ -46,4 +50,10 @@ export class UpdateUserDto {
   @Length(1, 300)
   @IsOptional()
   public userInformation: string;
+
+  @IsInt()
+  @Max(5)
+  @Min(1)
+  @IsOptional()
+  public rating: number;
 }

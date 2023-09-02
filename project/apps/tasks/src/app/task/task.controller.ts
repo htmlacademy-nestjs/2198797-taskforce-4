@@ -1,4 +1,4 @@
-import { Body, Controller, Get, HttpStatus, Param, Patch, Post, Query, UseInterceptors} from '@nestjs/common';
+import { Body, Controller, Get, HttpStatus, Param, Patch, Post, Query, UseInterceptors } from '@nestjs/common';
 import { TaskService } from './task.service';
 import { TaskRdo } from './rdo/task.rdo';
 import { CreateTaskDto } from './dto/create-task.dto';
@@ -10,7 +10,9 @@ import { UpdateTaskStatusDto } from './dto/update-task-status.dto';
 import { TaskTagPipe } from './pipes/task-tag.pipe';
 import { AddTaskResponseDto } from './dto/add-task-response.dto';
 import { TaskStatusInterseptor } from './interceptors/task-status.interceptor';
-
+import { ExecutorRdo } from './rdo/executor.rdo';
+import { ClientRdo } from './rdo/client.rdo';
+import { StatusQuery } from './query/status.query';
 
 @ApiTags('tasks')
 @Controller('tasks')
@@ -29,9 +31,33 @@ export class TaskController {
   }
 
   @Get('new')
-  async getNew() {
-    const tasks = await this.taskService.getNewTasks();
+  async index(@Query() query: TaskQuery) {
+    const tasks = await this.taskService.getTasks(query);
     return fillObject(TaskRdo, tasks);
+  }
+
+  @Get('client/tasks/:id')
+  public async getClientTasks(@Param('id') id: string, @Query() query: StatusQuery) {
+    const tasks = await this.taskService.getClientTasks(id, query);
+    return fillObject(TaskRdo, tasks);
+  }
+
+  @Get('executor/tasks/:id')
+  public async getExecutorTasks(@Param('id') id: string, @Query() query: StatusQuery) {
+    const tasks = await this.taskService.getExecutorTasks(id, query);
+    return fillObject(TaskRdo, tasks);
+  }
+
+    @Get('executor/info/:id')
+  public async getRating(@Param('id') id: string) {
+    const executor = await this.taskService.getRating(id);
+    return fillObject(ExecutorRdo, {...executor,  executorId: id});
+  }
+
+  @Get('client/info/:id')
+  public async getClientInfo(@Param('id') id: string) {
+    const client = await this.taskService.getClientInfo(id);
+    return fillObject(ClientRdo, {...client,  clientId: id});
   }
 
   @ApiResponse({
@@ -65,12 +91,6 @@ export class TaskController {
     await this.taskService.delete(id);
   }
 
-  @Get('/')
-  async index(@Query() query: TaskQuery) {
-    const tasks = await this.taskService.getTasks(query);
-    return fillObject(TaskRdo, tasks);
-  }
-
   @UseInterceptors(TaskStatusInterseptor)
   @Patch('status/:id')
   public async changeStatus(@Body() dto: UpdateTaskStatusDto, @Param('id') id: number) {
@@ -83,5 +103,7 @@ export class TaskController {
     const task = await this.taskService.addTaskResponse(id, dto);
     return fillObject(TaskRdo, task);
   }
+
+
 
 }

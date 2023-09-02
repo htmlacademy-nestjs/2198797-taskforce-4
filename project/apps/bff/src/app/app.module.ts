@@ -7,6 +7,7 @@ import { HTTP_CLIENT_MAX_REDIRECTS, HTTP_CLIENT_TIMEOUT } from './app.config';
 import { CheckAuthGuard } from './guards/check-auth.guard';
 import { CommentController } from './comments.controller';
 import { ReviewController } from './review.controller';
+import { CategoriesController } from './categories.controller';
 
 
 @Module({
@@ -20,7 +21,8 @@ import { ReviewController } from './review.controller';
     TasksController,
     UsersController,
     CommentController,
-    ReviewController
+    ReviewController,
+    CategoriesController
   ],
   providers: [CheckAuthGuard],
 })

@@ -2,7 +2,7 @@ import { BadRequestException, CallHandler, ExecutionContext, Injectable, NestInt
 import { UserRole } from '@project/shared/app-types';
 
 @Injectable()
-export class ClientInterceptor implements NestInterceptor {
+export class ExecutorInterceptor implements NestInterceptor {
   public intercept(context: ExecutionContext, next: CallHandler) {
     const request = context.switchToHttp().getRequest();
     if(request.user.role != UserRole.Executor){
