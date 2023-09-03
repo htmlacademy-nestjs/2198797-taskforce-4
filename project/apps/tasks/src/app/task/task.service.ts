@@ -4,7 +4,7 @@ import { CategoryRepository } from '../category/category.repository';
 import { CreateTaskDto } from './dto/create-task.dto';
 import { UpdateTaskDto } from './dto/update-task.dto';
 import { TaskEntity } from './task.entity';
-import { TASK_NOT_FOUND } from './task.constatnts';
+import { TASK_NOT_FOUND } from './task.constants';
 import { Client, Executor, Task } from '@project/shared/app-types';
 import { TaskQuery } from './query/task.query';
 import { TaskStatus } from '@project/shared/app-types';

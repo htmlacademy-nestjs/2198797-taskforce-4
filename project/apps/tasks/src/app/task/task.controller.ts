@@ -13,11 +13,14 @@ import { TaskStatusInterseptor } from './interceptors/task-status.interceptor';
 import { ExecutorRdo } from './rdo/executor.rdo';
 import { ClientRdo } from './rdo/client.rdo';
 import { StatusQuery } from './query/status.query';
+import { NotifyService } from '../notify/notify.service';
 
 @ApiTags('tasks')
 @Controller('tasks')
 export class TaskController {
-  constructor(private readonly taskService: TaskService) { }
+  constructor(
+    private readonly taskService: TaskService,
+    private readonly notifyService: NotifyService) { }
 
   @ApiResponse({
     type: TaskRdo,
@@ -27,6 +30,7 @@ export class TaskController {
   @Post('create')
   public async create(@Body(TaskTagPipe) dto: CreateTaskDto) {
     const newTask = await this.taskService.create(dto);
+    this.notifyService.addNewTask({title:newTask.title, description:newTask.description, price:newTask.price, city:newTask.city});
     return fillObject(TaskRdo, newTask);
   }
 
@@ -48,16 +52,16 @@ export class TaskController {
     return fillObject(TaskRdo, tasks);
   }
 
-    @Get('executor/info/:id')
+  @Get('executor/info/:id')
   public async getRating(@Param('id') id: string) {
     const executor = await this.taskService.getRating(id);
-    return fillObject(ExecutorRdo, {...executor,  executorId: id});
+    return fillObject(ExecutorRdo, { ...executor, executorId: id });
   }
 
   @Get('client/info/:id')
   public async getClientInfo(@Param('id') id: string) {
     const client = await this.taskService.getClientInfo(id);
-    return fillObject(ClientRdo, {...client,  clientId: id});
+    return fillObject(ClientRdo, { ...client, clientId: id });
   }
 
   @ApiResponse({

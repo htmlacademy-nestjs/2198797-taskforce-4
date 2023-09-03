@@ -1,6 +1,6 @@
 import { IsArray, IsEnum, IsIn, IsNumber, IsOptional, IsString } from 'class-validator';
 import { Transform } from 'class-transformer';
-import { DEFAULT_TASK_COUNT_LIMIT, DEFAULT_SORT_DIRECTION } from '../task.constatnts';
+import { DEFAULT_TASK_COUNT_LIMIT, DEFAULT_SORT_DIRECTION } from '../task.constants';
 import { TaskCity } from '@project/shared/app-types';
 import { TaskSort } from '@project/shared/app-types';
 

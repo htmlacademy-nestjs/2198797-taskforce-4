@@ -12,7 +12,7 @@ import { NotifyService } from '../notify/notify.service';
 import { UserValidationPipe } from './pipes/user-validate.pipe'
 import { UpdateUserDto } from './dto/update-user.dto';
 import { ChangePasswordUserDto } from './dto/change-password-user.dto';
-import { RequestWithTokenPayload } from '@project/shared/app-types';
+import { RequestWithTokenPayload, UserRole } from '@project/shared/app-types';
 
 
 
@@ -32,8 +32,10 @@ export class AuthenticationController {
   @Post('register')
   public async create(@Body(UserValidationPipe) dto: CreateUserDto) {
     const newUser = await this.authService.register(dto);
-    const { email, firstname, lastname } = newUser;
-    await this.notifyService.registerSubscriber({ email, firstname, lastname })
+    if (newUser.role === UserRole.Executor) {
+      const { email, firstname, lastname } = newUser;
+      await this.notifyService.registerSubscriber({ email, firstname, lastname })
+    }
     return fillObject(UserRdo, newUser);
   }
 
@@ -81,7 +83,7 @@ export class AuthenticationController {
     description: 'The user password has been successfuly changed'
   })
   @Post('newpsw')
-  public async changePsw(@Body() dto:ChangePasswordUserDto) {
+  public async changePsw(@Body() dto: ChangePasswordUserDto) {
     const user = await this.authService.changePassword(dto);
     return fillObject(UserRdo, user);
   }
