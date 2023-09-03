@@ -12,8 +12,8 @@ export class ReviewInterseptor implements NestInterceptor {
   public async intercept(context: ExecutionContext, next: CallHandler) {
     const request = context.switchToHttp().getRequest();
     const task = await this.taskService.getTask(parseInt(request.params.id))
-    if(task.status !== TaskStatus.Done && task.status !== TaskStatus.Failure){
-      throw new BadRequestException("You can leave a review for tasks with a status Done or Failure");
+    if(task.status !== TaskStatus.Done){
+      throw new BadRequestException("You can leave a review for tasks with a status Done");
     }
 
     return next.handle();

@@ -1,7 +1,7 @@
 import { Category } from "./category.interface";
 import { Comment } from "./comment.interface";
 import { Review } from "./review.interface";
-import { TaskStatus } from "./trask-status.enum";
+import { TaskStatus } from "./task-status.enum";
 import { TaskCity } from "./task-cities.enum";
 
 export interface Task {

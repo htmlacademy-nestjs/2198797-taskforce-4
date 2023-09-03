@@ -1,20 +1,19 @@
-import { Body, Controller, Get, Param, Patch, Post, Query, UseFilters, UseGuards, UseInterceptors } from '@nestjs/common';
+import { Body, Controller, Get, Param, Patch, Post, Query, UseFilters, UseGuards } from '@nestjs/common';
 import { CheckAuthGuard } from './guards/check-auth.guard';
 import { AxiosExceptionFilter } from './filters/axios-exception.filter';
 import { CreateNewTaskDto } from './dto/create-new-task.dto';
 import { UpdateTaskDto } from './dto/update-task.dto';
 import { HttpService } from '@nestjs/axios';
 import { ApplicationServiceURL } from './app.config';
-import { CreatorIdInterceptor } from './interseptors/creatorid.interceptor';
-import { ClientInterceptor } from './interseptors/client.intrceptor';
-import { PermisionInterseptor } from './interseptors/permision.interseptor';
 import { TokenPayload, UserRole } from '@project/shared/app-types';
 import { User } from './decorators/user-decorator';
 import { TaskQuery } from './query/task.query';
 import querystring from 'node:querystring';
-import { StatusPermisionInterseptor } from './interseptors/status.permision.inceptor';
-import { ExecutorInterceptor } from './interseptors/executor.interceptor';
 import { StatusQuery } from './query/status.query';
+import { PermissionGuard } from './guards/permission.guard';
+import { StatusPermissionGuard } from './guards/status.permision.guard';
+import { ClientGuard } from './guards/client.guard';
+import { ExecutorGuard } from './guards/executor.guard';
 
 @Controller('tasks')
 @UseFilters(AxiosExceptionFilter)
@@ -24,12 +23,10 @@ export class TasksController {
     private readonly httpService: HttpService,
   ) { }
 
-  @UseGuards(CheckAuthGuard)
-  @UseInterceptors(CreatorIdInterceptor, ClientInterceptor)
+  @UseGuards(CheckAuthGuard, ClientGuard)
   @Post('create')
   public async create(@Body() dto: CreateNewTaskDto, @User() req: TokenPayload) {
-    dto["creatorId"] = req.sub;
-    const { data } = await this.httpService.axiosRef.post(`${ApplicationServiceURL.Tasks}/create`, dto);
+    const { data } = await this.httpService.axiosRef.post(`${ApplicationServiceURL.Tasks}/create`, { ...dto, creatorId: req.sub });
     return data;
   }
 
@@ -39,16 +36,14 @@ export class TasksController {
     return data;
   }
 
-  @UseGuards(CheckAuthGuard)
-  @UseInterceptors(PermisionInterseptor)
+  @UseGuards(CheckAuthGuard, PermissionGuard)
   @Patch('update/:id')
   public async update(@Body() dto: UpdateTaskDto, @Param('id') id: string) {
     const { data } = await this.httpService.axiosRef.patch(`${ApplicationServiceURL.Tasks}/update/${id}`, dto);
     return data;
   }
 
-  @UseGuards(CheckAuthGuard)
-  @UseInterceptors(ExecutorInterceptor)
+  @UseGuards(CheckAuthGuard, ExecutorGuard)
   @Post('new')
   public async getNewTasks(@Query() query: TaskQuery) {
     const queryStr = querystring.stringify({ ...query });
@@ -71,8 +66,7 @@ export class TasksController {
     }
   }
 
-  @UseGuards(CheckAuthGuard)
-  @UseInterceptors(StatusPermisionInterseptor)
+  @UseGuards(CheckAuthGuard, StatusPermissionGuard)
   @Patch('status/:id')
   public async updateStatus(@Body() dto: CreateNewTaskDto, @Param('id') id: string) {
     const { data } = await this.httpService.axiosRef.patch(`${ApplicationServiceURL.Tasks}/status/${id}`, dto);
@@ -86,8 +80,7 @@ export class TasksController {
     return data;
   }
 
-  @UseGuards(CheckAuthGuard)
-  @UseInterceptors(PermisionInterseptor)
+  @UseGuards(CheckAuthGuard, PermissionGuard)
   @Post('delete/:id')
   public async delete(@Param('id') id: string) {
     const { data } = await this.httpService.axiosRef.post(`${ApplicationServiceURL.Tasks}/delete/${id}`);

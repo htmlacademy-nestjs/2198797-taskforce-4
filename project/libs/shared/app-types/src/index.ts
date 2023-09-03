@@ -3,7 +3,7 @@ export * from './lib/user.interface';
 export * from './lib/task.interface';
 export * from './lib/comment.interface';
 export * from './lib/review.interface';
-export * from './lib/trask-status.enum';
+export * from './lib/task-status.enum';
 export * from './lib/category.interface';
 export * from './lib/file.interface';
 export * from './lib/token-payload.interface';
