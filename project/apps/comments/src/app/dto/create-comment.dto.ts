@@ -2,6 +2,7 @@ import { ApiProperty } from '@nestjs/swagger';
 import { Transform } from 'class-transformer';
 import { IsInt, IsString, MaxLength, MinLength } from 'class-validator';
 
+
 export class CreateCommentDto {
 	@ApiProperty({
 		description: 'Comment texct',
@@ -13,7 +14,6 @@ export class CreateCommentDto {
 	public message: string;
 
 	@ApiProperty({
-
 		description: 'The uniq task ID for which the comment ',
 		example: '13'
 	})

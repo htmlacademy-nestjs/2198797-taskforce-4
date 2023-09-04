@@ -8,7 +8,6 @@ export class CreateCommentDto {
 	public message: string;
 
 	@ApiProperty({
-
 		description: 'The uniq task ID for which the comment ',
 		example: '13'
 	})
