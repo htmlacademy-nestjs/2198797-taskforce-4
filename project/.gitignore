@@ -42,4 +42,4 @@ Thumbs.db
 *.env
 
 
-./project/apps/uploader/uploads
+/project/apps/uploader/uploads

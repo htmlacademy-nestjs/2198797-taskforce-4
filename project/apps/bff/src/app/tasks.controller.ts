@@ -95,7 +95,7 @@ export class TasksController {
   @UseGuards(CheckAuthGuard, PermissionGuard)
   @UseInterceptors(FileInterceptor('file'))
   @Post('picture/:id')
-  public async uploadAvatar(@UploadedFile(new FileValidationPipe(MAX_PICTURE_SIZE, TOO_BIG_FILE_FOR_PICTURE)) file: Express.Multer.File, @Param('id') id:string) {
+  public async uploadAvatar(@UploadedFile(new FileValidationPipe(MAX_PICTURE_SIZE, TOO_BIG_FILE_FOR_PICTURE)) file: Express.Multer.File, @Param('id') id: string) {
     const formData = new FormData();
     formData.append('file', file.buffer, file.originalname);
     const { data } = await this.httpService.axiosRef.post(`${ApplicationServiceURL.Upload}/upload`, formData, {
@@ -104,7 +104,7 @@ export class TasksController {
       }
     });
     const pictureRef = `localhost:3006${data.path}`;
-    const resp = await this.httpService.axiosRef.patch(`${ApplicationServiceURL.Tasks}/update/${id}`, {picture: pictureRef});
+    const resp = await this.httpService.axiosRef.patch(`${ApplicationServiceURL.Tasks}/update/${id}`, { picture: pictureRef });
 
     return resp.data;
   }
