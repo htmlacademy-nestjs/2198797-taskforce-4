@@ -3,9 +3,9 @@ import { IsString } from "class-validator";
 
 export class CreateCategoryDto {
   @ApiProperty({
-		description: 'Category name',
-		example: 'Dogs'
-	})
+    description: 'Category name',
+    example: 'Dogs'
+  })
   @IsString()
   public title: string;
 }
