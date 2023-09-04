@@ -6,7 +6,7 @@ POST http://localhost:3002/api/users/create HTTP/1.1
 Content-Type: application/json
 
 {
-  "email": "exec@gmail.local",
+  "email": "6@gmail.local",
   "dateBirth": "2002-02-22",
   "firstname": "Keks",
   "lastname": "Smith",
@@ -23,15 +23,15 @@ POST http://localhost:3002/api/users/login HTTP/1.1
 Content-Type: application/json
 
 {
-  "email": "executor@gmail.local",
+  "email": "6@gmail.local",
   "password": "123456"
 }
 
 ###
 
 # Update user
-PATCH http://localhost:3002/api/users/update/64ef8143783a7c56ce7be7ea HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NGVmODE0Mzc4M2E3YzU2Y2U3YmU3ZWEiLCJlbWFpbCI6InVzZXJAbm90Zm91bmQubG9jYWwiLCJyb2xlIjoiRXhlY3V0b3IiLCJsYXN0bmFtZSI6IlNtaXRoIiwiZmlyc3RuYW1lIjoiVml0YWwiLCJpYXQiOjE2OTM0MjI0NzAsImV4cCI6MTY5MzUwODg3MH0.5ctZgiMNaWzaUeY_nFJRP7Rp6JSXr3CJ9bR6acIMMr0
+PATCH http://localhost:3002/api/users/update/64f4e3699d08a68283849d54 HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NGY0ZTM2OTlkMDhhNjgyODM4NDlkNTQiLCJlbWFpbCI6IjZAZ21haWwubG9jYWwiLCJyb2xlIjoiRXhlY3V0b3IiLCJsYXN0bmFtZSI6IlNtaXRoIiwiZmlyc3RuYW1lIjoiS2VrcyIsImlhdCI6MTY5Mzc3MTM5MiwiZXhwIjoxNjkzODU3NzkyfQ.moLy3yhlNyF8udblhWFe0tmJ6JtoS6Vmb2Zmqi_mjBw
 Content-Type: application/json
 
 {
@@ -40,7 +40,8 @@ Content-Type: application/json
   "lastname": "c0manch3",
   "city": "SaintPetersburg",
   "specialization": ["sd", "scsac", "sacasc", "scasc"],
-  "userInformation":"Per"
+  "userInformation":"Per",
+   "avatar": "64f34de1fce8e56ae10a620b"
 }
 
 ###
@@ -58,17 +59,30 @@ Content-Type: application/json
 
 # Get user by ID
 GET http://localhost:3002/api/users/64f34de1fce8e56ae10a620b HTTP/1.1
+###
+
+# Upload user avatar
+POST http://localhost:3002/api/users/avatar HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NGY0ZTM2OTlkMDhhNjgyODM4NDlkNTQiLCJlbWFpbCI6IjZAZ21haWwubG9jYWwiLCJyb2xlIjoiRXhlY3V0b3IiLCJsYXN0bmFtZSI6IlNtaXRoIiwiZmlyc3RuYW1lIjoiS2VrcyIsImlhdCI6MTY5Mzc3MTM5MiwiZXhwIjoxNjkzODU3NzkyfQ.moLy3yhlNyF8udblhWFe0tmJ6JtoS6Vmb2Zmqi_mjBw
+Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
+
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="file"; filename="cat.jpg"
+
+< project/apps/uploader/src/app/file/cat.jpg
+------WebKitFormBoundary7MA4YWxkTrZu0gW--
+
 ###---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 ###-----------------------------------------------------------------------------------------------------------------------------------------------------TASKS--------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 ###---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 ## Create a new task
 POST http://localhost:3002/api/tasks/create HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NGYzMWM5ZDRkNzcyMWVhYTE1ZWZhNjAiLCJlbWFpbCI6ImNsaWVudEBnbWFpbC5sb2NhbCIsInJvbGUiOiJDbGllbnQiLCJsYXN0bmFtZSI6IlNtaXRoIiwiZmlyc3RuYW1lIjoiS2VrcyIsImlhdCI6MTY5MzY1NDE5MCwiZXhwIjoxNjkzNzQwNTkwfQ.cUXI_f8C0yKuOdb9lzbzG7TKrh39v5iETa01IGgO-PA
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NGY0ODYzZjhiYmQ1YTUwZTVmMTQzODMiLCJlbWFpbCI6ImNsaWVudEBnbWFpbC5sb2NhbCIsInJvbGUiOiJDbGllbnQiLCJsYXN0bmFtZSI6IlNtaXRoIiwiZmlyc3RuYW1lIjoiS2VrcyIsImlhdCI6MTY5Mzc0Njc2MywiZXhwIjoxNjkzODMzMTYzfQ.1WmG6RBLmjgeQbNiI1suUB-IWLXgnNRDWZLtfnAX2Dg
 Content-Type: application/json
 
 {
-  "title": "Find Cat",
+  "title": "Find1 Cat",
   "description": "Find the best cat in the world",
   "category": "1",
   "price": "10",
@@ -105,6 +119,17 @@ Content-Type: application/json
   "tags": ["x23","r5f", "GGGG", "GGGG"]
 
 }
+###
+# Upload task picture
+POST http://localhost:3002/api/tasks/picture/76 HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NGY0ZTM2OTlkMDhhNjgyODM4NDlkNTQiLCJlbWFpbCI6IjZAZ21haWwubG9jYWwiLCJyb2xlIjoiRXhlY3V0b3IiLCJsYXN0bmFtZSI6IlNtaXRoIiwiZmlyc3RuYW1lIjoiS2VrcyIsImlhdCI6MTY5Mzc3MTM5MiwiZXhwIjoxNjkzODU3NzkyfQ.moLy3yhlNyF8udblhWFe0tmJ6JtoS6Vmb2Zmqi_mjBw
+Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
+
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="file"; filename="cat.jpg"
+
+< project/apps/uploader/src/app/file/cat.jpg
+------WebKitFormBoundary7MA4YWxkTrZu0gW--
 ###
 
 # Change task-status

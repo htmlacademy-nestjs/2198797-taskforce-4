@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Patch, Post, Query, UseFilters, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Param, Patch, Post, Query, UploadedFile, UseFilters, UseGuards, UseInterceptors } from '@nestjs/common';
 import { CheckAuthGuard } from './guards/check-auth.guard';
 import { AxiosExceptionFilter } from './filters/axios-exception.filter';
 import { CreateNewTaskDto } from './dto/create-new-task.dto';
@@ -14,6 +14,11 @@ import { PermissionGuard } from './guards/permission.guard';
 import { StatusPermissionGuard } from './guards/status.permision.guard';
 import { ClientGuard } from './guards/client.guard';
 import { ExecutorGuard } from './guards/executor.guard';
+import { FileInterceptor } from '@nestjs/platform-express';
+import FormData from "form-data";
+import { FileValidationPipe } from './pipes/file-validation.pipe';
+import { MAX_PICTURE_SIZE, TOO_BIG_FILE_FOR_PICTURE } from './constants/task.constants';
+
 
 @Controller('tasks')
 @UseFilters(AxiosExceptionFilter)
@@ -85,5 +90,22 @@ export class TasksController {
   public async delete(@Param('id') id: string) {
     const { data } = await this.httpService.axiosRef.post(`${ApplicationServiceURL.Tasks}/delete/${id}`);
     return data;
+  }
+
+  @UseGuards(CheckAuthGuard, PermissionGuard)
+  @UseInterceptors(FileInterceptor('file'))
+  @Post('picture/:id')
+  public async uploadAvatar(@UploadedFile(new FileValidationPipe(MAX_PICTURE_SIZE, TOO_BIG_FILE_FOR_PICTURE)) file: Express.Multer.File, @Param('id') id:string) {
+    const formData = new FormData();
+    formData.append('file', file.buffer, file.originalname);
+    const { data } = await this.httpService.axiosRef.post(`${ApplicationServiceURL.Upload}/upload`, formData, {
+      headers: {
+        ...formData.getHeaders()
+      }
+    });
+    const pictureRef = `localhost:3006${data.path}`;
+    const resp = await this.httpService.axiosRef.patch(`${ApplicationServiceURL.Tasks}/update/${id}`, {picture: pictureRef});
+
+    return resp.data;
   }
 }

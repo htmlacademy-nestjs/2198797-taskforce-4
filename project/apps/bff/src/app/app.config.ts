@@ -4,6 +4,7 @@ export enum ApplicationServiceURL {
   Comments = 'http://localhost:3004/api/comments',
   Reviews = 'http://localhost:3000/api/reviews',
   Categories = 'http://localhost:3000/api/categories',
+  Upload = 'http://localhost:3006/api/files'
 
 }
 

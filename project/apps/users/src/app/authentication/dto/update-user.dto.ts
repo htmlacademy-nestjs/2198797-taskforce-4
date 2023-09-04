@@ -44,6 +44,7 @@ export class UpdateUserDto {
 
   @IsArray()
   @ArrayMaxSize(5)
+  @IsOptional()
   public specialization: string[];
 
   @IsString()

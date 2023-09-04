@@ -73,7 +73,7 @@ export class AuthenticationController {
   })
   @UseGuards(JwtAuthGuard)
   @Patch('update/:id')
-  public async update(@Param('id', MongoidValidationPipe) id: string, @Body(UserValidationPipe) dto: UpdateUserDto) {
+  public async update(@Req() req: Request, @Param('id', MongoidValidationPipe) id: string, @Body(UserValidationPipe) dto: UpdateUserDto) {
     const user = await this.authService.updateUser(id, dto);
     return fillObject(UserRdo, user);
   }
