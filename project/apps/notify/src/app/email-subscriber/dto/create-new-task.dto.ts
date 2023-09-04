@@ -1,6 +1,6 @@
 import { TaskCity } from '@project/shared/app-types';
 import { Transform } from 'class-transformer';
-import { IsString, IsOptional, Min, Max, IsDate, IsEnum} from 'class-validator';
+import { IsString, IsOptional, Min, Max, IsEnum } from 'class-validator';
 
 export class CreateNewTaskDto {
 
@@ -16,7 +16,7 @@ export class CreateNewTaskDto {
   @Transform(({ value }) => Number(value))
   public price?: number;
 
-  
+
   @IsEnum(TaskCity)
   public city: TaskCity;
 

@@ -1,4 +1,4 @@
-import { Expose, Transform } from 'class-transformer';
+import { Expose } from 'class-transformer';
 import { ApiProperty } from '@nestjs/swagger';
 import { TaskCity } from '@project/shared/app-types';
 import { UserRole } from '@project/shared/app-types';
@@ -58,7 +58,7 @@ export class ClientRdo {
     example: 'Client'
   })
   @Expose()
-  public role:UserRole;
+  public role: UserRole;
 
   @ApiProperty({
     description: 'Number of user tasks',

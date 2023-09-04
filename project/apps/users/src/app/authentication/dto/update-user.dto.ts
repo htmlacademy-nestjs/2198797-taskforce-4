@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { ArrayMaxSize, IsArray, IsDate, IsEnum, IsIn, IsInt, IsOptional, IsString, Length, Max, Min } from 'class-validator'
+import { ArrayMaxSize, IsArray, IsDate, IsEnum, IsInt, IsOptional, IsString, Length, Max, Min } from 'class-validator'
 import { AUTH_USER_DATE_BIRTH_NOT_VALID } from '../authentication.constant';
 import { Transform } from 'class-transformer';
 import { TaskCity } from '@project/shared/app-types';
