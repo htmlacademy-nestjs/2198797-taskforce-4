@@ -11,9 +11,8 @@ export class ReviewService {
     private readonly reviewRepository: ReviewRepository
   ) { }
 
-  async createReview(dto: CreateReviewDto): Promise<Review> {
-    const reviewEntity = new ReviewEntity(dto);
-    console.log(reviewEntity.grade === 5);
+  async createReview(taskId: number, dto: CreateReviewDto): Promise<Review> {
+    const reviewEntity = new ReviewEntity({...dto, taskId: taskId});
     return this.reviewRepository.create(reviewEntity);
   }
 

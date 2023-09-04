@@ -22,5 +22,6 @@ import { NotifyModule } from '../notify/notify.module';
     AuthenticationService,
     JwtAccessStrategy,
   ],
+  exports: [AuthenticationService]
 })
 export class AuthenticationModule { }

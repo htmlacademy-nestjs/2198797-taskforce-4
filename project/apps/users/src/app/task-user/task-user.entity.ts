@@ -1,6 +1,7 @@
 import { User, UserRole } from '@project/shared/app-types';
 import { compare, genSalt, hash } from 'bcrypt';
 import { SALT_ROUNDS } from './task-user.constant';
+import { TaskCity } from '@project/shared/app-types';
 
 export class TaskUserEntity implements User {
   public _id: string;
@@ -9,9 +10,12 @@ export class TaskUserEntity implements User {
   public email: string;
   public firstname: string;
   public lastname: string;
-  public city: string;
+  public city: TaskCity;
   public passwordHash: string;
   public role: UserRole;
+  public specialization: string[];
+  public userInformation: string;
+  public createdAt: Date;
 
   constructor(taskUser: User) {
     this.fillEntity(taskUser);
@@ -28,6 +32,9 @@ export class TaskUserEntity implements User {
       avatar: this.avatar,
       passwordHash: this.passwordHash,
       role: this.role,
+      specialization: this.specialization,
+      userInformation: this.userInformation,
+      createdAt: this.createdAt,
     };
   }
 
@@ -41,6 +48,9 @@ export class TaskUserEntity implements User {
     this.city = taskUser.city;
     this.passwordHash = taskUser.passwordHash;
     this.role = taskUser.role;
+    this.specialization = taskUser.specialization;
+    this.userInformation = taskUser.userInformation;
+    this.createdAt = new Date();
   }
 
 

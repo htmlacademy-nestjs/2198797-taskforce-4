@@ -1,9 +1,10 @@
-import { Body, Controller, Get, HttpStatus, Param, Post } from '@nestjs/common';
+import { Body, Controller, Get, HttpStatus, Param, Post, Query } from '@nestjs/common';
 import { CommentService } from './comment.service';
 import { CommentRdo } from './rdo/comment.rdo';
 import { CreateCommentDto } from './dto/create-comment.dto';
 import { fillObject } from '@project/util/util-core';
 import { ApiResponse, ApiTags } from '@nestjs/swagger';
+import { CommentQuery } from './query/comment.query';
 
 @ApiTags('comments')
 @Controller('comments')
@@ -18,7 +19,6 @@ export class CommentController {
   @Post('create')
   public async create(@Body() dto: CreateCommentDto) {
     const newComment = await this.commentService.create(dto);
-    console.log(newComment);
     return fillObject(CommentRdo, newComment);
   }
 
@@ -28,7 +28,7 @@ export class CommentController {
     description: 'Comment found'
   })
   @Get(':id')
-  public async show(@Param('id') id: string) {
+  public async show(@Param('id') id: number) {
     const existComment = await this.commentService.getComment(id);
     return fillObject(CommentRdo, existComment);
   }
@@ -38,7 +38,17 @@ export class CommentController {
     description: 'Comment deleted'
   })
   @Post('delete/:id')
-  public async delete(@Param('id') id: string) {
+  public async delete(@Param('id') id: number) {
     await this.commentService.delete(id);
+  }
+
+  @ApiResponse({
+    status: HttpStatus.OK,
+    description: 'Commens found'
+  })
+  @Get('/')
+  async index(@Query() query: CommentQuery) {
+    const comments = await this.commentService.getComments(query);
+    return fillObject(CommentRdo, comments);
   }
 }

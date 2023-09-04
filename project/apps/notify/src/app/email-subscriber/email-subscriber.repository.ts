@@ -39,4 +39,8 @@ export class EmailSubscriberRepository implements CRUDRepository<EmailSubscriber
       .findOne({ email })
       .exec()
   }
+
+  public async find(): Promise<Subscriber[] | null> {
+    return this.emailSubscriberModel.find()
+  }
 }

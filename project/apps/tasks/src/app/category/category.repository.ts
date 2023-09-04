@@ -30,6 +30,14 @@ export class CategoryRepository implements CRUDRepository<CategoryEntity, number
     });
   }
 
+  public findByTitle(title: string): Promise<Category | null> {
+    return this.prisma.category.findFirst({
+      where: {
+        title
+      }
+    });
+  }
+
   public find(): Promise<Category[]> {
     return this.prisma.category.findMany();
   }

@@ -2,3 +2,11 @@
 GET http://localhost:3000/api/categories HTTP/1.1
 
 ###
+# Create new caterory
+POST http://localhost:3000/api/categories/create
+Content-Type: application/json
+
+{
+  "title": "doGs"
+}
+####

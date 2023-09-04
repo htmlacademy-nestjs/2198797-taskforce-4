@@ -1,3 +1,4 @@
+import { TaskCity } from "./task-cities.enum";
 import { UserRole } from "./user-role.enum";
 
 export interface User {
@@ -5,9 +6,12 @@ export interface User {
   email: string;
   firstname: string;
   lastname: string;
-  city: string;
+  city: TaskCity;
   dateBirth: Date;
-  avatar: string;
-  passwordHash: string;
+  avatar?: string;
+  passwordHash?: string;
   role: UserRole;
+  createdAt?: Date;
+  specialization?: string[];
+  userInformation?: string;
 }

@@ -9,29 +9,70 @@ Content-Type: application/json
   "price": "10",
   "deadline": "2023-10-22",
   "address": "Yokogama st.",
-  "city": "St. Petersburg",
-  "tags": ["x3","15"],
-  "creatorId": "13"
+  "city": "SaintPetersburg",
+  "tags": ["x23","MMMM", "fcwec", "wdqwd", "wdqwd"],
+  "creatorId": "64f0da92fadc115baf083e7b"
 }
 
 ###
 
 # Get task by ID
-GET http://localhost:3000/api/tasks/5 HTTP/1.1
+GET http://localhost:3000/api/tasks/2 HTTP/1.1
 
 ###
 # Update a task
-PATCH http://localhost:3000/api/tasks/update/5 HTTP/1.1
+PATCH http://localhost:3000/api/tasks/update/3 HTTP/1.1
 Content-Type: application/json
 
 {
-  "name": "Just Cat",
-  "deadline": "2024-12-22"
+  "title": "Just Cat",
+  "deadline": "2024-12-22",
+  "tags": ["x23","r5f", "GGGG", "GGGG"]
+
 }
 
 ###
 
-# Get all tasks and filtres
-GET http://localhost:3000/api/tasks?sortDirection=desc&categories=3&limit=5&page=1 HTTP/1.1
+# Get all New tasks and filtres
+GET http://localhost:3000/api/tasks/new?sortDirection=desc&limit=5&page=1&sortBy=commentsCount&catigories=1,2 HTTP/1.1
+
+###
+# Change task-status
+PATCH http://localhost:3000/api/tasks/status/45 HTTP/1.1
+Content-Type: application/json
+
+{
+  "status": "InWork",
+  "executorId": "64f1d75b2c2a518a47c72260"
+  
+}
+
+###
+# Get all new tasks
+GET http://localhost:3000/api/tasks/new HTTP/1.1
+
+###
+# Add new response
+PATCH http://localhost:3000/api/tasks/response/45 HTTP/1.1
+Content-Type: application/json
+
+{
+  "executorId": "64f1d75b2c2a518a47c72260"
+}
+###
+# Get executor info
+GET http://localhost:3000/api/tasks/executorrait/64f31d9c4d7721eaa15efa67 HTTP/1.1
+
+###
+# Get client info
+GET http://localhost:3000/api/tasks/clientinfo/64f31c9d4d7721eaa15efa60 HTTP/1.1
+
+###
+# Get all client tasks
+GET http://localhost:3000/api/tasks/clienttasks/64f31c9d4d7721eaa15efa60 HTTP/1.1
+
+###
+# Get all executor tasks
+GET http://localhost:3000/api/tasks/executortasks/64f31d9c4d7721eaa15efa67 HTTP/1.1
 
 ###

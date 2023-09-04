@@ -1,6 +1,5 @@
 import { ConflictException, Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
-import dayjs from 'dayjs';
 import { AUTH_USER_EXISTS, AUTH_USER_NOT_FOUND, AUTH_USER_PASSWORD_WRONG } from './authentication.constant';
 import { TaskUserEntity } from '../task-user/task-user.entity';
 import { LoginUserDto } from './dto/login-user.dto';
@@ -8,6 +7,8 @@ import { TaskUserRepository } from '../task-user/task-user.repository';
 import { JwtService } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
 import { TokenPayload, User } from '@project/shared/app-types';
+import { UpdateUserDto } from './dto/update-user.dto';
+import { ChangePasswordUserDto } from './dto/change-password-user.dto';
 
 
 @Injectable()
@@ -19,13 +20,7 @@ export class AuthenticationService {
   ) { }
 
   public async register(dto: CreateUserDto) {
-    const { email, firstname, lastname, password, dateBirth, city, role } = dto;
-
-    const taskUser = {
-      email, firstname, lastname, city, role,
-      avatar: '', dateBirth: dayjs(dateBirth).toDate(),
-      passwordHash: ''
-    };
+    const { email, password } = dto;
 
     const existUser = await this.taskUserRepository
       .findByEmail(email);
@@ -34,7 +29,7 @@ export class AuthenticationService {
       throw new ConflictException(AUTH_USER_EXISTS);
     }
 
-    const userEntity = await new TaskUserEntity(taskUser)
+    const userEntity = await new TaskUserEntity(dto)
       .setPassword(password)
 
     return this.taskUserRepository
@@ -76,5 +71,31 @@ export class AuthenticationService {
     }
   }
 
+  public async updateUser(id: string, dto: UpdateUserDto) {
+    const existUser = await this.taskUserRepository
+      .findById(id);
 
+    if (!existUser) {
+      throw new ConflictException(AUTH_USER_NOT_FOUND);
+    }
+    const userEntity = new TaskUserEntity({ ...existUser, ...dto });
+    return this.taskUserRepository.update(id, userEntity);
+  }
+
+  public async changePassword(dto: ChangePasswordUserDto) {
+    const { email, password, newPassword } = dto;
+    const existUser = await this.taskUserRepository.findByEmail(email);
+
+    if (!existUser) {
+      throw new NotFoundException(AUTH_USER_NOT_FOUND);
+    }
+
+    const taskUserEntity = new TaskUserEntity(existUser);
+    if (!await taskUserEntity.comparePassword(password)) {
+      throw new UnauthorizedException(AUTH_USER_PASSWORD_WRONG);
+    }
+
+    const userEntity = await new TaskUserEntity(existUser).setPassword(newPassword);
+    return this.taskUserRepository.update(userEntity._id, userEntity);
+  }
 }

@@ -1,8 +1,9 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsEmail, IsEnum, IsISO8601, IsString, Length } from 'class-validator'
+import { ArrayMaxSize, IsArray, IsDate, IsEmail, IsEnum, IsOptional, IsString, Length } from 'class-validator'
 import { UserRole } from "@project/shared/app-types";
 import { AUTH_USER_DATE_BIRTH_NOT_VALID, AUTH_USER_EMAIL_NOT_VALID } from '../authentication.constant';
 import { Transform } from 'class-transformer';
+import { TaskCity } from '@project/shared/app-types';
 
 
 export class CreateUserDto {
@@ -17,15 +18,16 @@ export class CreateUserDto {
     description: 'User birth date',
     example: '1981-03-12',
   })
-  @IsISO8601({}, { message: AUTH_USER_DATE_BIRTH_NOT_VALID })
-  public dateBirth: string;
+  @IsDate({ message: AUTH_USER_DATE_BIRTH_NOT_VALID })
+  @Transform(({value}) => new Date(value))
+  public dateBirth: Date;
 
   @ApiProperty({
-    description: 'User city',
-    example: 'St. Petersburg',
+    description: 'User city in Moscow/SaintPetersburg/Vladivostok',
+    example: 'SaintPetersburg',
   })
-  @IsString()
-  public city: string;
+  @IsEnum(TaskCity)
+  public city: TaskCity;
 
   @ApiProperty({
     description: 'User first name',
@@ -55,7 +57,15 @@ export class CreateUserDto {
     description: 'User role',
     example: 'Client'
   })
-  @Transform(({ value }) => ("" + value).toLowerCase())
   @IsEnum(UserRole)
   public role: UserRole;
+
+  @IsArray()
+  @ArrayMaxSize(5)
+  public specialization: string[];
+
+  @IsString()
+  @Length(1,300)
+  @IsOptional()
+  public userInformation: string;
 }

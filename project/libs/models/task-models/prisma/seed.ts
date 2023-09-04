@@ -16,7 +16,8 @@ async function fillDb() {
             description: 'Найти пропавшего кота, серого цвета',
             price: 99.9,
             deadline: new Date(2023, 10, 1),
-            creatorId: '13'
+            creatorId: '13',
+            city: 'Moscow'
           }
         ]
       },
@@ -36,6 +37,7 @@ async function fillDb() {
             price: 10,
             deadline: new Date(2023, 8, 8),
             creatorId: '15',
+            city: 'Moscow',
             comments: {
               create: [
                 {
@@ -66,6 +68,7 @@ async function fillDb() {
             description: 'Провести полную дельфинопластику кота, желательно хвост побольше. Надеюсь найдуться специалисты',
             price: 12000,
             deadline: new Date(2023, 10, 1),
+            city: 'SaintPetersburg',
             creatorId: '155',
             executorId: '133',
             review: {

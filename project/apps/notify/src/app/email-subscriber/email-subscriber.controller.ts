@@ -1,4 +1,5 @@
 import { CreateSubscriberDto } from './dto/create-subscriber.dto';
+import { CreateNewTaskDto } from './dto/create-new-task.dto';
 import { EmailSubscriberService } from './email-subscriber.service';
 import { Controller } from '@nestjs/common';
 import { RabbitSubscribe } from '@golevelup/nestjs-rabbitmq';
@@ -20,5 +21,15 @@ export class EmailSubscriberController {
   public async create(subscriber: CreateSubscriberDto) {
     this.subscriberService.addSubscriber(subscriber);
     this.mailService.sendNotifyNewSubscriber(subscriber);
+  }
+
+  @RabbitSubscribe({
+    exchange: 'taskforce.notify',
+    routingKey: RabbitRouting.AddNewTask,
+    queue: 'task.notify',
+  })
+  public async send(task: CreateNewTaskDto) {
+    const subscribers = await this.subscriberService.getSubscribers();
+    this.mailService.sendNotifyNewTask(task, subscribers);
   }
 }
