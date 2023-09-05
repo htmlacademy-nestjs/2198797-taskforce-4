@@ -6,11 +6,12 @@ import { TaskService } from './task.service';
 import { TaskRepository } from './task.repository';
 import { CategoryModule } from '../category/category.module';
 import { NotifyModule } from '../notify/notify.module';
+import { UserModule } from '../user/user.module';
 
 @Module({
-  imports: [CategoryModule, NotifyModule],
+  imports: [CategoryModule, NotifyModule, UserModule],
   controllers: [TaskController],
   providers: [TaskService, TaskRepository],
-  exports: [TaskService],
+  exports: [TaskService, TaskRepository],
 })
 export class TaskModule {}

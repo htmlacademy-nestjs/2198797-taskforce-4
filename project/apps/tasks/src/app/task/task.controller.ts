@@ -20,7 +20,8 @@ import { NotifyService } from '../notify/notify.service';
 export class TaskController {
   constructor(
     private readonly taskService: TaskService,
-    private readonly notifyService: NotifyService) { }
+    private readonly notifyService: NotifyService,
+  ) { }
 
   @ApiResponse({
     type: TaskRdo,
@@ -30,7 +31,7 @@ export class TaskController {
   @Post('create')
   public async create(@Body(TaskTagPipe) dto: CreateTaskDto) {
     const newTask = await this.taskService.create(dto);
-    this.notifyService.addNewTask({title:newTask.title, description:newTask.description, price:newTask.price, city:newTask.city});
+    this.notifyService.addNewTask({ title: newTask.title, description: newTask.description, price: newTask.price, city: newTask.city });
     return fillObject(TaskRdo, newTask);
   }
 

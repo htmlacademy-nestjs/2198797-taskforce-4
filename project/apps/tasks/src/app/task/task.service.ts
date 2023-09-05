@@ -12,13 +12,15 @@ import { UpdateTaskStatusDto } from './dto/update-task-status.dto';
 import { AddTaskResponseDto } from './dto/add-task-response.dto';
 import { TaskSort } from '@project/shared/app-types';
 import { StatusQuery } from './query/status.query';
+import { UserService } from '../user/user.service';
 
 
 @Injectable()
 export class TaskService {
   constructor(
     private readonly taskRepository: TaskRepository,
-    private readonly categoryRepository: CategoryRepository
+    private readonly categoryRepository: CategoryRepository,
+    private readonly userService: UserService,
   ) { }
 
   async create(dto: CreateTaskDto): Promise<Task> {
@@ -59,7 +61,7 @@ export class TaskService {
   }
 
   async getTasks(query: TaskQuery): Promise<Task[]> {
-    query.sortBy? query : query['sortBy'] =  TaskSort.createdAt;
+    query.sortBy ? query : query['sortBy'] = TaskSort.createdAt;
     return this.taskRepository.find(query);
   }
 
@@ -69,14 +71,22 @@ export class TaskService {
     if (!existTask) {
       throw new NotFoundException(TASK_NOT_FOUND);
     }
-    if(dto.status === TaskStatus.InWork){
+    if (dto.status === TaskStatus.InWork) {
       existTask.executorId = dto.executorId
     }
-    const newTaskEntity = new TaskEntity({ ...existTask, status: dto.status});
-    return await this.taskRepository.update(id, newTaskEntity);
+    const newTaskEntity = new TaskEntity({ ...existTask, status: dto.status });
+
+    const task = await this.taskRepository.update(id, newTaskEntity);
+
+    if (task.status === TaskStatus.Failure || task.status === TaskStatus.InWork) {
+      const executor = await this.taskRepository.getExecutorInfo(task.executorId);
+      this.userService.updateUserRating({ userId: task.executorId, rating: executor.rating });
+    }
+
+    return task;
   }
 
-  public async addTaskResponse(id: number, dto: AddTaskResponseDto): Promise<Task>{
+  public async addTaskResponse(id: number, dto: AddTaskResponseDto): Promise<Task> {
     const existTask = await this.taskRepository.findById(id);
 
     if (!existTask) {
@@ -84,24 +94,24 @@ export class TaskService {
     }
     existTask.responses.push(dto.executorId);
     existTask.responses = [...new Set(existTask.responses)];
-    existTask.responsesCount = existTask.responses.length ;
-    const newTaskEntity = new TaskEntity({...existTask});
+    existTask.responsesCount = existTask.responses.length;
+    const newTaskEntity = new TaskEntity({ ...existTask });
     return await this.taskRepository.update(id, newTaskEntity);
   }
 
-  public async getRating(executorId: string): Promise<Executor>{
+  public async getRating(executorId: string): Promise<Executor> {
     return await this.taskRepository.getExecutorInfo(executorId);
   }
 
-  public async getClientInfo(clientId: string): Promise<Client>{
+  public async getClientInfo(clientId: string): Promise<Client> {
     return await this.taskRepository.getClientInfo(clientId);
   }
 
-  public async getClientTasks(clientId: string, query: StatusQuery): Promise<Task[]>{
+  public async getClientTasks(clientId: string, query: StatusQuery): Promise<Task[]> {
     return await this.taskRepository.getClientTasks(clientId, query);
   }
 
-  public async getExecutorTasks(executorId: string, query: StatusQuery): Promise<Task[]>{
+  public async getExecutorTasks(executorId: string, query: StatusQuery): Promise<Task[]> {
     return await this.taskRepository.getExecutorTasks(executorId, query);
   }
 }

@@ -14,7 +14,7 @@ export class UpdateUserDto {
   @IsDate({ message: AUTH_USER_DATE_BIRTH_NOT_VALID })
   @Transform(({ value }) => new Date(value))
   @IsOptional()
-  public dateBirth: Date;
+  public dateBirth?: Date;
 
   @ApiProperty({
     description: 'User city',
@@ -22,7 +22,7 @@ export class UpdateUserDto {
   })
   @IsEnum(TaskCity)
   @IsOptional()
-  public city: TaskCity;
+  public city?: TaskCity;
 
   @ApiProperty({
     description: 'User first name',
@@ -31,7 +31,7 @@ export class UpdateUserDto {
   @IsString()
   @Length(3, 50)
   @IsOptional()
-  public firstname: string;
+  public firstname?: string;
 
   @ApiProperty({
     description: 'User last name',
@@ -40,21 +40,19 @@ export class UpdateUserDto {
   @IsString()
   @Length(3, 50)
   @IsOptional()
-  public lastname: string;
+  public lastname?: string;
 
   @IsArray()
   @ArrayMaxSize(5)
   @IsOptional()
-  public specialization: string[];
+  public specialization?: string[];
 
   @IsString()
   @Length(1, 300)
   @IsOptional()
-  public userInformation: string;
+  public userInformation?: string;
 
   @IsInt()
-  @Max(5)
-  @Min(1)
   @IsOptional()
-  public rating: number;
+  public rating?: number;
 }

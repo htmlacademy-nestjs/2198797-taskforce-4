@@ -82,4 +82,12 @@ export class UserRdo {
   @Expose()
   public role:UserRole;
 
+  
+  @ApiProperty({
+    description: 'User rank',
+    example: '1'
+  })
+  @Expose()
+  public rank:number;
+
 }

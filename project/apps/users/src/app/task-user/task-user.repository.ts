@@ -5,7 +5,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { TaskUserEntity } from './task-user.entity';
 import { User } from '@project/shared/app-types';
 import { TaskUserModel } from './task-user.model';
-
+import mongoose from 'mongoose';
 
 @Injectable()
 export class TaskUserRepository implements CRUDRepository<TaskUserEntity, string, User> {
@@ -39,4 +39,25 @@ export class TaskUserRepository implements CRUDRepository<TaskUserEntity, string
       .findByIdAndUpdate(id, item.toObject(), { new: true })
       .exec();
   }
+
+  public async getUserWithRank(id: string): Promise<User>{
+    const results = await this.taskUserModel.aggregate([
+      {
+        $setWindowFields: {
+          sortBy: { rating: -1 },
+          output: {
+            rank: {
+              $rank: {}
+            }
+          }
+        }
+      },
+      { $match: { _id: new mongoose.Types.ObjectId(id) } }
+    ]);
+
+    return results[0];
+  }
+
+
 }
+

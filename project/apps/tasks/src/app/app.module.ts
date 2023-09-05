@@ -5,6 +5,7 @@ import { CategoryModule } from './category/category.module';
 import { TaskModule } from './task/task.module';
 import { ReviewsModule } from './reviews/reviews.module';
 import { NotifyModule } from './notify/notify.module';
+import { UserModule } from './user/user.module';
 import { ConfigTasksModule } from '@project/config/config-tasks';
 
 @Module({
@@ -14,7 +15,9 @@ import { ConfigTasksModule } from '@project/config/config-tasks';
     TaskModule,
     ReviewsModule,
     ConfigTasksModule,
-    NotifyModule,],
+    NotifyModule,
+    UserModule
+  ],
   controllers: [],
   providers: [],
 })

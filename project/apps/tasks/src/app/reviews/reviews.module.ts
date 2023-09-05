@@ -3,10 +3,11 @@ import { ReviewService } from "./review.service";
 import { ReviewRepository } from "./review.repository";
 import { Module } from "@nestjs/common";
 import { TaskModule } from "../task/task.module";
+import { UserModule } from "../user/user.module";
 
 
 @Module({
-  imports: [TaskModule],
+  imports: [TaskModule, UserModule],
   controllers: [ReviewController],
   providers: [ReviewService, ReviewRepository],
   exports: [ReviewRepository]

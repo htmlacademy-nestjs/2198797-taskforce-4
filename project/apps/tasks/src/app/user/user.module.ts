@@ -1,16 +1,16 @@
 import { Module } from '@nestjs/common';
 import { RabbitMQModule } from '@golevelup/nestjs-rabbitmq';
 import { getRabbitMQOptions } from '@project/util/util-core';
-import { NotifyService } from './notify.service';
+import { UserService } from './user.service';
 
 @Module({
   imports: [
     RabbitMQModule.forRootAsync(
       RabbitMQModule,
-      getRabbitMQOptions('rabbit.notify')
+      getRabbitMQOptions('rabbit.user')
     )
   ],
-  providers: [NotifyService],
-  exports: [NotifyService]
+  providers: [UserService],
+  exports: [UserService]
 })
-export class NotifyModule { }
+export class UserModule { }

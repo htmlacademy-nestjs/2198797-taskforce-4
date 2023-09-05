@@ -100,4 +100,11 @@ export class ExecutorRdo {
   @Expose()
   public doneTasks: number;
 
+  @ApiProperty({
+    description: 'User score ',
+    example: '5'
+  })
+  @Expose()
+  public rank: number;
+
 }

@@ -61,18 +61,21 @@ Content-Type: application/json
 }
 ###
 # Get executor info
-GET http://localhost:3000/api/tasks/executorrait/64f31d9c4d7721eaa15efa67 HTTP/1.1
+GET http://localhost:3000/api/tasks/executor/info/64f31d9c4d7721eaa15efa67 HTTP/1.1
 
 ###
 # Get client info
-GET http://localhost:3000/api/tasks/clientinfo/64f31c9d4d7721eaa15efa60 HTTP/1.1
+GET http://localhost:3000/api/tasks/client/info/64f31c9d4d7721eaa15efa60 HTTP/1.1
 
 ###
 # Get all client tasks
-GET http://localhost:3000/api/tasks/clienttasks/64f31c9d4d7721eaa15efa60 HTTP/1.1
+GET http://localhost:3000/api/tasks/client/tasks/64f31c9d4d7721eaa15efa60?status=New HTTP/1.1
 
 ###
 # Get all executor tasks
-GET http://localhost:3000/api/tasks/executortasks/64f31d9c4d7721eaa15efa67 HTTP/1.1
+GET http://localhost:3000/api/tasks/executor/tasks/64f31d9c4d7721eaa15efa67 HTTP/1.1
 
 ###
+# Delete task by Id
+POST http://localhost:3000/api/tasks/delete/4 HTTP/1.1
+####

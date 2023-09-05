@@ -151,15 +151,18 @@ export class TaskRepository implements CRUDRepository<TaskEntity, number, Task> 
         review: true,
       },
     });
+
     let grade = 0;
+    let reviewCounter = 0;
     allTasks.forEach((task) => {
       if (task.review) {
         grade += task.review.grade
+        reviewCounter += 1;
       }
     });
 
     return {
-      rating: grade / (allTasks.length + failureTasks.length),
+      rating: grade / (reviewCounter + failureTasks.length),
       failureTasks: failureTasks.length,
       doneTasks: doneTasks.length
     }

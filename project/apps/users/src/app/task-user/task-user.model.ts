@@ -61,6 +61,12 @@ export class TaskUserModel extends Document implements User {
   })
   public userInformation: string;
 
+  @Prop({
+    type: Number,
+    default: 0
+  })
+  public rating: number;
+
 
 }
 
