@@ -16,6 +16,7 @@ export class TaskUserEntity implements User {
   public specialization: string[];
   public userInformation: string;
   public createdAt: Date;
+  public rating: number;
 
   constructor(taskUser: User) {
     this.fillEntity(taskUser);
@@ -35,6 +36,7 @@ export class TaskUserEntity implements User {
       specialization: this.specialization,
       userInformation: this.userInformation,
       createdAt: this.createdAt,
+      rating: this.rating,
     };
   }
 
@@ -51,6 +53,7 @@ export class TaskUserEntity implements User {
     this.specialization = taskUser.specialization;
     this.userInformation = taskUser.userInformation;
     this.createdAt = new Date();
+    this.rating = taskUser.rating;
   }
 
 

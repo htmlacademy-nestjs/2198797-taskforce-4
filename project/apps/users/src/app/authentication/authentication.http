@@ -17,7 +17,7 @@ Content-Type: application/json
 ###
 
 # Get user by ID
-GET http://localhost:3003/api/auth/64ef8143783a7c56ce7be7ea HTTP/1.1
+GET http://localhost:3003/api/auth/64f769e44a9751d7ad8b4be2 HTTP/1.1
 ###
 
 # Login user by email and password
@@ -60,4 +60,10 @@ Content-Type: application/json
 # Check user token
 POST http://localhost:3003/api/auth/check HTTP/1.1
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NGVmODE0Mzc4M2E3YzU2Y2U3YmU3ZWEiLCJlbWFpbCI6InVzZXJAbm90Zm91bmQubG9jYWwiLCJyb2xlIjoiRXhlY3V0b3IiLCJsYXN0bmFtZSI6IlNtaXRoIiwiZmlyc3RuYW1lIjoiVml0YWwiLCJpYXQiOjE2OTM0MjI0NzAsImV4cCI6MTY5MzUwODg3MH0.5ctZgiMNaWzaUeY_nFJRP7Rp6JSXr3CJ9bR6acIMMr0
+###
+
+
+
+# Get user place 
+GET http://localhost:3003/api/auth/place/64f769e44a9751d7ad8b4be2 HTTP/1.1
 ###

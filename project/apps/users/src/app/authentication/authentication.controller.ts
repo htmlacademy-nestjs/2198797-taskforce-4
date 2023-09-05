@@ -12,7 +12,9 @@ import { NotifyService } from '../notify/notify.service';
 import { UserValidationPipe } from './pipes/user-validate.pipe'
 import { UpdateUserDto } from './dto/update-user.dto';
 import { ChangePasswordUserDto } from './dto/change-password-user.dto';
-import { RequestWithTokenPayload, UserRole } from '@project/shared/app-types';
+import { RabbitRouting, RequestWithTokenPayload, UserRole } from '@project/shared/app-types';
+import { RabbitSubscribe } from '@golevelup/nestjs-rabbitmq';
+import { UserRatingDto } from './dto/user-rating.dto';
 
 
 
@@ -23,6 +25,8 @@ export class AuthenticationController {
     private readonly authService: AuthenticationService,
     private readonly notifyService: NotifyService,
   ) { }
+
+
 
 
   @ApiResponse({
@@ -63,7 +67,8 @@ export class AuthenticationController {
   })
   @Get(':id')
   public async show(@Param('id', MongoidValidationPipe) id: string) {
-    const existUser = await this.authService.getUser(id);
+    const existUser = await this.authService.getUserWithRank(id);
+
     return fillObject(UserRdo, existUser);
   }
 
@@ -92,6 +97,15 @@ export class AuthenticationController {
   @Post('check')
   public async checkToken(@Req() { user: payload }: RequestWithTokenPayload) {
     return payload;
+  }
+
+  @RabbitSubscribe({
+    exchange: 'taskforce.notify',
+    routingKey: RabbitRouting.UpdateUserRating,
+    queue: 'task.user',
+  })
+  public async updateUserRating(dto: UserRatingDto){
+    await this.authService.updateUser(dto.userId, {rating: dto.rating});
   }
 
 }

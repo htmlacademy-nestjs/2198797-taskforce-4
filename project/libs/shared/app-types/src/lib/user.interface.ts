@@ -14,4 +14,5 @@ export interface User {
   createdAt?: Date;
   specialization?: string[];
   userInformation?: string;
+  rating?: number;
 }

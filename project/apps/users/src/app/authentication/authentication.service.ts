@@ -98,4 +98,14 @@ export class AuthenticationService {
     const userEntity = await new TaskUserEntity(existUser).setPassword(newPassword);
     return this.taskUserRepository.update(userEntity._id, userEntity);
   }
+
+  public async getUserWithRank(id: string) {
+    const existUser = await this.taskUserRepository
+      .findById(id);
+
+    if (!existUser) {
+      throw new ConflictException(AUTH_USER_NOT_FOUND);
+    }
+    return await this.taskUserRepository.getUserWithRank(id);
+  }
 }
