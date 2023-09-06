@@ -4,6 +4,6 @@ export interface TokenPayload {
   sub: string;
   email: string;
   role: UserRole;
-  lastname: string;
-  firstname: string;
+  lastName: string;
+  firstName: string;
 }

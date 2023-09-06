@@ -1,9 +1,9 @@
-import { Body, Controller, Get, Param, Patch, Post, Req, UploadedFile, UseFilters, UseGuards, UseInterceptors} from '@nestjs/common';
+import { Body, Controller, Get, Param, Patch, Post, Req, UploadedFile, UseFilters, UseGuards, UseInterceptors } from '@nestjs/common';
 import { ApplicationServiceURL } from './app.config';
 import { LoginUserDto } from './dto/login-user.dto';
-import { CreateUserDto } from './dto/crete-user.dto';
+import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
-import { CreateNewPswDto } from './dto/crete_new-user-psw.dto';
+import { CreateNewPasswordDto } from './dto/create-new-password.dto';
 import { HttpService } from '@nestjs/axios';
 import { AxiosExceptionFilter } from './filters/axios-exception.filter';
 import { TokenPayload, UserRole } from '@project/shared/app-types';
@@ -52,7 +52,7 @@ export class UsersController {
   }
 
   @Post('newpsw')
-  public async newpsw(@Body() dto: CreateNewPswDto) {
+  public async updatePassword(@Body() dto: CreateNewPasswordDto) {
     const { data } = await this.httpService.axiosRef.post(`${ApplicationServiceURL.Users}/newpsw`, dto);
     return data;
   }
@@ -60,19 +60,16 @@ export class UsersController {
   @Get(':id')
   public async getUser(@Param('id') id: string) {
     let { data } = await this.httpService.axiosRef.get(`${ApplicationServiceURL.Users}/${id}`);
-    let resp;
     if (data.role === UserRole.Client) {
       const clientInfo = await this.httpService.axiosRef.get(`${ApplicationServiceURL.Tasks}/client/info/${id}`);
       data = { ...data, ...clientInfo.data };
-      resp = fillObject(ClientRdo, { ...data, ...clientInfo.data });
-    }
-    if (data.role === UserRole.Executor) {
+      return fillObject(ClientRdo, { ...data, ...clientInfo.data })
+    } else {
       const executorInfo = await this.httpService.axiosRef.get(`${ApplicationServiceURL.Tasks}/executor/info/${id}`);
-      resp = fillObject(ExecutorRdo, { ...data, ...executorInfo.data });
+      return fillObject(ExecutorRdo, { ...data, ...executorInfo.data });
     }
-    return resp;
   }
-  
+
   @UseGuards(CheckAuthGuard)
   @UseInterceptors(FileInterceptor('file'))
   @Post('avatar')
@@ -85,7 +82,7 @@ export class UsersController {
       }
     });
     const avatarRef = `localhost:3006${data.path}`;
-    const resp = await this.httpService.axiosRef.patch(`${ApplicationServiceURL.Users}/update/${user.sub}`, {avatar: avatarRef}, {
+    const resp = await this.httpService.axiosRef.patch(`${ApplicationServiceURL.Users}/update/${user.sub}`, { avatar: avatarRef }, {
       headers: {
         'Authorization': req.headers['authorization'],
         'Content-Type': 'application/json'

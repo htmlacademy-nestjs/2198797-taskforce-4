@@ -19,8 +19,8 @@ export class EmailSubscriberController {
     queue: 'taskforce.notify',
   })
   public async create(subscriber: CreateSubscriberDto) {
-    this.subscriberService.addSubscriber(subscriber);
-    this.mailService.sendNotifyNewSubscriber(subscriber);
+    await this.subscriberService.addSubscriber(subscriber);
+    await this.mailService.sendNotifyNewSubscriber(subscriber);
   }
 
   @RabbitSubscribe({
@@ -30,6 +30,6 @@ export class EmailSubscriberController {
   })
   public async send(task: CreateNewTaskDto) {
     const subscribers = await this.subscriberService.getSubscribers();
-    this.mailService.sendNotifyNewTask(task, subscribers);
+    await this.mailService.sendNotifyNewTask(task, subscribers);
   }
 }

@@ -16,12 +16,12 @@ export class TaskUserModel extends Document implements User {
   @Prop({
     required: true,
   })
-  public firstname: string;
+  public firstName: string;
 
   @Prop({
     required: true,
   })
-  public lastname: string;
+  public lastName: string;
 
   @Prop({
     required: true,

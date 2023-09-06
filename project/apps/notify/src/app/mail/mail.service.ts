@@ -22,10 +22,10 @@ export class MailService {
       subject: EMAIL_ADD_SUBSCRIBER_SUBJECT,
       template: './add-subscriber',
       context: {
-        user: `${subscriber.firstname} ${subscriber.lastname}`,
+        user: `${subscriber.firstName} ${subscriber.lastName}`,
         email: `${subscriber.email}`,
       }
-    })
+    });
   }
 
   public async sendNotifyNewTask(task: CreateNewTaskDto, subscribers: Subscriber[]) {
@@ -37,12 +37,12 @@ export class MailService {
           subject: CREATE_NEW_TASK_SUBJECT,
           template: './new-task',
           context: {
-            user: `${subscriber.firstname} ${subscriber.lastname}`,
+            user: `${subscriber.firstName} ${subscriber.lastName}`,
             title: `${task.title}`,
             description: `${task.description}`,
-            city: `${task.city}`
+            city: `${task.city}`,
           }
-        })
+        });
       }
     }
   }

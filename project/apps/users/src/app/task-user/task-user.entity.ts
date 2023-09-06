@@ -8,8 +8,8 @@ export class TaskUserEntity implements User {
   public avatar: string;
   public dateBirth: Date;
   public email: string;
-  public firstname: string;
-  public lastname: string;
+  public firstName: string;
+  public lastName: string;
   public city: TaskCity;
   public passwordHash: string;
   public role: UserRole;
@@ -26,8 +26,8 @@ export class TaskUserEntity implements User {
     return {
       _id: this._id,
       email: this.email,
-      firstname: this.firstname,
-      lastname: this.lastname,
+      firstName: this.firstName,
+      lastName: this.lastName,
       city: this.city,
       dateBirth: this.dateBirth,
       avatar: this.avatar,
@@ -45,8 +45,8 @@ export class TaskUserEntity implements User {
     this.avatar = taskUser.avatar;
     this.dateBirth = taskUser.dateBirth;
     this.email = taskUser.email;
-    this.firstname = taskUser.firstname;
-    this.lastname = taskUser.lastname;
+    this.firstName = taskUser.firstName;
+    this.lastName = taskUser.lastName;
     this.city = taskUser.city;
     this.passwordHash = taskUser.passwordHash;
     this.role = taskUser.role;

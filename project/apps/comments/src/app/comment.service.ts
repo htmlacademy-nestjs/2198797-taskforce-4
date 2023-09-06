@@ -13,9 +13,9 @@ export class CommentService {
   ) { }
 
   public async create(dto: CreateCommentDto) {
-    const commentEntity = await new CommentEntity(dto)
+    const commentEntity = new CommentEntity(dto)
 
-    return this.commentRepository
+    return await this.commentRepository
       .create(commentEntity);
   }
 
@@ -35,7 +35,7 @@ export class CommentService {
     if (!existComment) {
       throw new NotFoundException(COMMENT_NOT_FOUND);
     }
-    const newCommentEntity = await new CommentEntity({ ...existComment, ...dto });
+    const newCommentEntity = new CommentEntity({ ...existComment, ...dto });
 
     return await this.commentRepository.update(id, newCommentEntity);
   }

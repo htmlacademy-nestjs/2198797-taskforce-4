@@ -3,7 +3,7 @@ import { ApiProperty } from '@nestjs/swagger';
 
 export class CreateCommentDto {
   @ApiProperty({
-    description: 'Comment texct',
+    description: 'Comment text',
     example: 'Good morning'
   })
   public message: string;

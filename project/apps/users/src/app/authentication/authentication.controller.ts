@@ -6,7 +6,7 @@ import { fillObject } from '@project/util/util-core';
 import { LoggedUserRdo } from './rdo/logged-user.rdo';
 import { LoginUserDto } from './dto/login-user.dto';
 import { ApiResponse, ApiTags } from '@nestjs/swagger';
-import { MongoidValidationPipe } from '@project/shared/shared-pipes';
+import { MongoIdValidationPipe } from '@project/shared/shared-pipes';
 import { JwtAuthGuard } from './guards/jwt-auth.guard';
 import { NotifyService } from '../notify/notify.service';
 import { UserValidationPipe } from './pipes/user-validate.pipe'
@@ -37,8 +37,8 @@ export class AuthenticationController {
   public async create(@Body(UserValidationPipe) dto: CreateUserDto) {
     const newUser = await this.authService.register(dto);
     if (newUser.role === UserRole.Executor) {
-      const { email, firstname, lastname } = newUser;
-      await this.notifyService.registerSubscriber({ email, firstname, lastname })
+      const { email, firstName, lastName } = newUser;
+      await this.notifyService.registerSubscriber({ email, firstName, lastName })
     }
     return fillObject(UserRdo, newUser);
   }
@@ -66,7 +66,7 @@ export class AuthenticationController {
     description: 'User found'
   })
   @Get(':id')
-  public async show(@Param('id', MongoidValidationPipe) id: string) {
+  public async show(@Param('id', MongoIdValidationPipe) id: string) {
     const existUser = await this.authService.getUserWithRank(id);
 
     return fillObject(UserRdo, existUser);
@@ -78,7 +78,7 @@ export class AuthenticationController {
   })
   @UseGuards(JwtAuthGuard)
   @Patch('update/:id')
-  public async update(@Req() req: Request, @Param('id', MongoidValidationPipe) id: string, @Body(UserValidationPipe) dto: UpdateUserDto) {
+  public async update(@Req() req: Request, @Param('id', MongoIdValidationPipe) id: string, @Body(UserValidationPipe) dto: UpdateUserDto) {
     const user = await this.authService.updateUser(id, dto);
     return fillObject(UserRdo, user);
   }

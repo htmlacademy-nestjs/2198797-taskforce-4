@@ -6,7 +6,7 @@ export class CreateNewTaskDto {
 
   @ApiProperty({
     description: 'Task name',
-    example: 'Chek my friend bank account'
+    example: 'Check my friend bank account'
   })
   public title: string;
 

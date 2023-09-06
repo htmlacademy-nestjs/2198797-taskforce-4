@@ -78,9 +78,9 @@ export class TaskService {
 
     const task = await this.taskRepository.update(id, newTaskEntity);
 
-    if (task.status === TaskStatus.Failure || task.status === TaskStatus.InWork) {
+    if (task.status === TaskStatus.Failure) {
       const executor = await this.taskRepository.getExecutorInfo(task.executorId);
-      this.userService.updateUserRating({ userId: task.executorId, rating: executor.rating });
+      await this.userService.updateUserRating({ userId: task.executorId, rating: executor.rating });
     }
 
     return task;

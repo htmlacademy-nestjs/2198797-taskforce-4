@@ -4,8 +4,8 @@ import { UserRole } from "./user-role.enum";
 export interface User {
   _id?: string;
   email: string;
-  firstname: string;
-  lastname: string;
+  firstName: string;
+  lastName: string;
   city: TaskCity;
   dateBirth: Date;
   avatar?: string;

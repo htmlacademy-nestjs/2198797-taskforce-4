@@ -1,6 +1,6 @@
 import { ApiProperty } from "@nestjs/swagger";
 
-export class CreateNewPswDto {
+export class CreateNewPasswordDto {
 
   @ApiProperty({
     description: 'User unique address',

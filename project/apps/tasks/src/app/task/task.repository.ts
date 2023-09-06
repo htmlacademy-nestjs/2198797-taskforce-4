@@ -89,7 +89,7 @@ export class TaskRepository implements CRUDRepository<TaskEntity, number, Task> 
       skip: page > 0 ? limit * (page - 1) : undefined,
     });
 
-    return (dbResponse.map((element) => { return { ...element, status: TaskStatus[element.status], city: TaskCity[element.city] } }));
+    return dbResponse.map((element) => { return { ...element, status: TaskStatus[element.status], city: TaskCity[element.city] } });
   }
 
   public async update(taskId: number, item: TaskEntity): Promise<Task> {

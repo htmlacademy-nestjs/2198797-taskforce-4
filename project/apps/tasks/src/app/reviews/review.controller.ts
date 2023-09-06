@@ -3,7 +3,7 @@ import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, Post, UseIn
 import { fillObject } from "@project/util/util-core";
 import { ReviewRdo } from './rdo/review.rdo';
 import { CreateReviewDto } from './dto/create-review.dto';
-import { ReviewInterseptor } from './interceptors/review.interceptor';
+import { ReviewInterceptor } from './interceptors/review.interceptor';
 import { TaskService } from '../task/task.service';
 
 @Controller('reviews')
@@ -18,19 +18,18 @@ export class ReviewController {
     return fillObject(ReviewRdo, existReview);
   }
 
-  @UseInterceptors(ReviewInterseptor)
+  @UseInterceptors(ReviewInterceptor)
   @Post('/create/:id')
   async create(@Body() dto: CreateReviewDto, @Param('id') taskId: number) {
     const newReview = await this.reviewService.createReview(taskId, dto);
     const task = await this.taskService.getTask(taskId);
     const response = fillObject(ReviewRdo, newReview);
-    response["executorId"] = task.executorId;
-    return response;
+    return {...response, executorId: task.executorId};
   }
 
   @Delete('/:id')
   @HttpCode(HttpStatus.NO_CONTENT)
   async destroy(@Param('id') id: number) {
-    this.reviewService.deleteReview(id);
+    await this.reviewService.deleteReview(id);
   }
 }

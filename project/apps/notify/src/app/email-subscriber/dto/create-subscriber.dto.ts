@@ -6,8 +6,8 @@ export class CreateSubscriberDto {
   public email: string;
 
   @IsNotEmpty({ message: FIRST_NAME_IS_EMPTY })
-  public firstname: string;
+  public firstName: string;
 
   @IsNotEmpty({ message: USER_ID_IS_EMPTY })
-  public lastname: string;
+  public lastName: string;
 }

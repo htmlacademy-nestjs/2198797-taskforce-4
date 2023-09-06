@@ -5,7 +5,6 @@ import { TaskUserEntity } from '../task-user/task-user.entity';
 import { LoginUserDto } from './dto/login-user.dto';
 import { TaskUserRepository } from '../task-user/task-user.repository';
 import { JwtService } from '@nestjs/jwt';
-import { ConfigService } from '@nestjs/config';
 import { TokenPayload, User } from '@project/shared/app-types';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { ChangePasswordUserDto } from './dto/change-password-user.dto';
@@ -15,7 +14,6 @@ import { ChangePasswordUserDto } from './dto/change-password-user.dto';
 export class AuthenticationService {
   constructor(
     private readonly taskUserRepository: TaskUserRepository,
-    private readonly configService: ConfigService,
     private readonly jwtService: JwtService,
   ) { }
 
@@ -62,8 +60,8 @@ export class AuthenticationService {
       sub: user._id,
       email: user.email,
       role: user.role,
-      lastname: user.lastname,
-      firstname: user.firstname,
+      lastName: user.lastName,
+      firstName: user.firstName,
     };
 
     return {

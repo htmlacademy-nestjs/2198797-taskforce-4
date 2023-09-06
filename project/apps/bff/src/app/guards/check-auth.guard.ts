@@ -6,7 +6,7 @@ import { ApplicationServiceURL } from '../app.config';
 export class CheckAuthGuard implements CanActivate {
   constructor(
     private readonly httpService: HttpService,
-  ) {}
+  ) { }
 
   public async canActivate(context: ExecutionContext): Promise<boolean> {
     const request = context.switchToHttp().getRequest();
@@ -14,7 +14,7 @@ export class CheckAuthGuard implements CanActivate {
       headers: {
         'Authorization': request.headers['authorization']
       }
-    })
+    });
     request['user'] = data;
     return true;
   }

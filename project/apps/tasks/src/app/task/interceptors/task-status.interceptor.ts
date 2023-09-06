@@ -4,7 +4,7 @@ import { TaskService } from '../task.service';
 
 
 @Injectable()
-export class TaskStatusInterseptor implements NestInterceptor {
+export class TaskStatusInterceptor implements NestInterceptor {
   constructor(
     private readonly taskService: TaskService,
   ) { }
@@ -22,13 +22,13 @@ export class TaskStatusInterseptor implements NestInterceptor {
     if (status === TaskStatus.New) {
       throw new BadRequestException('You can not set status New for task');
     }
-    if(status === TaskStatus.InWork && !request.body.executorId){
+    if (status === TaskStatus.InWork && !request.body.executorId) {
       throw new BadRequestException('You can not set status InWork without Executor ');
     }
 
-    if(request.body.executorId){
+    if (request.body.executorId) {
       const executorId = request.body.executorId;
-      if(!task.responses.includes(executorId)){
+      if (!task.responses.includes(executorId)) {
         throw new BadRequestException(`You can not use executorId=${executorId}`);
       }
     }

@@ -6,13 +6,13 @@ POST http://localhost:3002/api/users/create HTTP/1.1
 Content-Type: application/json
 
 {
-  "email": "executor3@gmail.local",
+  "email": "client2@gmail.local",
   "dateBirth": "2002-02-22",
-  "firstname": "Keks",
-  "lastname": "Smith",
+  "firstName": "Keks",
+  "lastName": "Smith",
   "city": "Moscow",
   "password": "123456",
-  "role": "Executor",
+  "role": "Client",
   "specialization": ["sd", "scsac", "sacasc", "scasc", "ascc"],
   "userInformation":"Person"
   }
@@ -23,21 +23,21 @@ POST http://localhost:3002/api/users/login HTTP/1.1
 Content-Type: application/json
 
 {
-  "email": "client@gmail.local",
+  "email": "executor@gmail.local",
   "password": "123456"
 }
 
 ###
 
 # Update user
-PATCH http://localhost:3002/api/users/update/64f4e3699d08a68283849d54 HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NGY0ZTM2OTlkMDhhNjgyODM4NDlkNTQiLCJlbWFpbCI6IjZAZ21haWwubG9jYWwiLCJyb2xlIjoiRXhlY3V0b3IiLCJsYXN0bmFtZSI6IlNtaXRoIiwiZmlyc3RuYW1lIjoiS2VrcyIsImlhdCI6MTY5Mzc3MTM5MiwiZXhwIjoxNjkzODU3NzkyfQ.moLy3yhlNyF8udblhWFe0tmJ6JtoS6Vmb2Zmqi_mjBw
+PATCH http://localhost:3002/api/users/update/64f81bd81024e1f59bff9db6 HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NGY4MWJkODEwMjRlMWY1OWJmZjlkYjYiLCJlbWFpbCI6ImV4ZWN1dG9yNUBnbWFpbC5sb2NhbCIsInJvbGUiOiJFeGVjdXRvciIsImxhc3ROYW1lIjoiU21pdGgiLCJmaXJzdE5hbWUiOiJLZWtzIiwiaWF0IjoxNjkzOTgxNzI5LCJleHAiOjE2OTQwNjgxMjl9.6oahSRt59c62gGdHDPbBW2J8sLgTI8zPxFPmJEyMZ9o
 Content-Type: application/json
 
 {
   "dateBirth": "2005-02-22",
-  "firstname": "Vital",
-  "lastname": "c0manch3",
+  "firstName": "Ivan",
+  "lastName": "Smirnov",
   "city": "SaintPetersburg",
   "specialization": ["sd", "scsac", "sacasc", "scasc"],
   "userInformation":"Per",
@@ -69,7 +69,7 @@ Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0g
 ------WebKitFormBoundary7MA4YWxkTrZu0gW
 Content-Disposition: form-data; name="file"; filename="cat.jpg"
 
-< project/apps/uploader/src/app/file/cat.jpg
+< project/apps/uploader/src/assets/cat.jpg
 ------WebKitFormBoundary7MA4YWxkTrZu0gW--
 
 
@@ -96,7 +96,7 @@ Content-Type: application/json
 ###
 
 # Get task by ID
-GET http://localhost:3002/api/tasks/76 HTTP/1.1
+GET http://localhost:3002/api/tasks/ HTTP/1.1
 ###
 
 # Get all New tasks and filtres
@@ -122,31 +122,31 @@ Content-Type: application/json
 }
 ###
 # Upload task picture
-POST http://localhost:3002/api/tasks/picture/76 HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NGY0ODYzZjhiYmQ1YTUwZTVmMTQzODMiLCJlbWFpbCI6ImNsaWVudEBnbWFpbC5sb2NhbCIsInJvbGUiOiJDbGllbnQiLCJsYXN0bmFtZSI6IlNtaXRoIiwiZmlyc3RuYW1lIjoiS2VrcyIsImlhdCI6MTY5Mzc0Njc2MywiZXhwIjoxNjkzODMzMTYzfQ.1WmG6RBLmjgeQbNiI1suUB-IWLXgnNRDWZLtfnAX2Dg
+POST http://localhost:3002/api/tasks/picture/5 HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NGY3NjlmZDRhOTc1MWQ3YWQ4YjRiZTYiLCJlbWFpbCI6ImNsaWVudEBnbWFpbC5sb2NhbCIsInJvbGUiOiJDbGllbnQiLCJsYXN0bmFtZSI6IlNtaXRoIiwiZmlyc3RuYW1lIjoiS2VrcyIsImlhdCI6MTY5MzkzNjEzMSwiZXhwIjoxNjk0MDIyNTMxfQ.9YiNJD-oSXDmKrKY618CTMvTcArEVjDnYwOD_z9y0OE
 Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
 
 ------WebKitFormBoundary7MA4YWxkTrZu0gW
 Content-Disposition: form-data; name="file"; filename="cat.jpg"
 
-< project/apps/uploader/src/app/file/cat.jpg
+< project/apps/uploader/src/assets/cat.jpg
 ------WebKitFormBoundary7MA4YWxkTrZu0gW--
 ###
 
 # Change task-status
-PATCH http://localhost:3002/api/tasks/status/6 HTTP/1.1
+PATCH http://localhost:3002/api/tasks/status/7 HTTP/1.1
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NGY3NjlmZDRhOTc1MWQ3YWQ4YjRiZTYiLCJlbWFpbCI6ImNsaWVudEBnbWFpbC5sb2NhbCIsInJvbGUiOiJDbGllbnQiLCJsYXN0bmFtZSI6IlNtaXRoIiwiZmlyc3RuYW1lIjoiS2VrcyIsImlhdCI6MTY5MzkzNjEzMSwiZXhwIjoxNjk0MDIyNTMxfQ.9YiNJD-oSXDmKrKY618CTMvTcArEVjDnYwOD_z9y0OE
 Content-Type: application/json
 
 {
-  "status": "Done",
+  "status": "InWork",
   "executorId": "64f769e44a9751d7ad8b4be2"
   
 }
 
 ###
 # Add new response
-POST http://localhost:3002/api/tasks/response/6 HTTP/1.1
+POST http://localhost:3002/api/tasks/response/7 HTTP/1.1
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NGY3NjllNDRhOTc1MWQ3YWQ4YjRiZTIiLCJlbWFpbCI6ImV4ZWN1dG9yQGdtYWlsLmxvY2FsIiwicm9sZSI6IkV4ZWN1dG9yIiwibGFzdG5hbWUiOiJTbWl0aCIsImZpcnN0bmFtZSI6Iktla3MiLCJpYXQiOjE2OTM5MzYzODMsImV4cCI6MTY5NDAyMjc4M30.GaFWRsBupIgZm7WC56e3O3qsepTru-a_O_3ha3vOFVw
 ###
 # Delete task by Id
@@ -159,12 +159,12 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NGY0ODYzZ
 
 # Create a new comment
 POST http://localhost:3002/api/comments/create HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NGY0ZTM2OTlkMDhhNjgyODM4NDlkNTQiLCJlbWFpbCI6IjZAZ21haWwubG9jYWwiLCJyb2xlIjoiRXhlY3V0b3IiLCJsYXN0bmFtZSI6IlNtaXRoIiwiZmlyc3RuYW1lIjoiS2VrcyIsImlhdCI6MTY5Mzc3MTM5MiwiZXhwIjoxNjkzODU3NzkyfQ.moLy3yhlNyF8udblhWFe0tmJ6JtoS6Vmb2Zmqi_mjBw
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NGY3NjlmZDRhOTc1MWQ3YWQ4YjRiZTYiLCJlbWFpbCI6ImNsaWVudEBnbWFpbC5sb2NhbCIsInJvbGUiOiJDbGllbnQiLCJsYXN0bmFtZSI6IlNtaXRoIiwiZmlyc3RuYW1lIjoiS2VrcyIsImlhdCI6MTY5MzkzNjEzMSwiZXhwIjoxNjk0MDIyNTMxfQ.9YiNJD-oSXDmKrKY618CTMvTcArEVjDnYwOD_z9y0OE
 Content-Type: application/json
 
 {
   "message": "Heloooooooooo!!!",
-  "taskId": "76"
+  "taskId": "5"
 }
 ###
 # Get comment by ID
