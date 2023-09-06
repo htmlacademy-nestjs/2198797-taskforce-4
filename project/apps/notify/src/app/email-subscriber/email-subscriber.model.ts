@@ -13,10 +13,10 @@ export class EmailSubscriberModel extends Document implements Subscriber {
   public email: string;
 
   @Prop()
-  public firstname: string;
+  public firstName: string;
 
   @Prop()
-  public lastname: string;
+  public lastName: string;
 }
 
 export const EmailSubscriberSchema = SchemaFactory.createForClass(EmailSubscriberModel);

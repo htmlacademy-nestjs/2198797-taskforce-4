@@ -35,7 +35,7 @@ export class CreateUserDto {
   })
   @IsString()
   @Length(3, 50)
-  public firstname: string;
+  public firstName: string;
 
   @ApiProperty({
     description: 'User last name',
@@ -43,7 +43,7 @@ export class CreateUserDto {
   })
   @IsString()
   @Length(3, 50)
-  public lastname: string;
+  public lastName: string;
 
   @ApiProperty({
     description: 'User password',

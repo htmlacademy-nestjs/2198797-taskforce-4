@@ -25,13 +25,13 @@ export class CreateUserDto {
     description: 'User first name',
     example: 'Ivan',
   })
-  public firstname: string;
+  public firstName: string;
 
   @ApiProperty({
     description: 'User last name',
     example: 'Ivanov'
   })
-  public lastname: string;
+  public lastName: string;
 
   @ApiProperty({
     description: 'User password',

@@ -25,7 +25,7 @@ export class CategoryRepository implements CRUDRepository<CategoryEntity, number
   public findById(categoryId: number): Promise<Category | null> {
     return this.prisma.category.findFirst({
       where: {
-        categoryId
+        categoryId,
       }
     });
   }
@@ -33,7 +33,7 @@ export class CategoryRepository implements CRUDRepository<CategoryEntity, number
   public findByTitle(title: string): Promise<Category | null> {
     return this.prisma.category.findFirst({
       where: {
-        title
+        title,
       }
     });
   }
@@ -45,7 +45,7 @@ export class CategoryRepository implements CRUDRepository<CategoryEntity, number
   public update(categoryId: number, item: CategoryEntity): Promise<Category> {
     return this.prisma.category.update({
       where: {
-        categoryId
+        categoryId,
       },
       data: { ...item.toObject(), categoryId }
     });

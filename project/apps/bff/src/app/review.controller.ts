@@ -3,7 +3,7 @@ import { AxiosExceptionFilter } from "./filters/axios-exception.filter";
 import { HttpService } from "@nestjs/axios";
 import { CheckAuthGuard } from "./guards/check-auth.guard";
 import { PermissionGuard } from "./guards/permission.guard";
-import { CreateReviewDto } from "./dto/crete-review.dto";
+import { CreateReviewDto } from "./dto/create-review.dto";
 import { ApplicationServiceURL } from "./app.config";
 
 @Controller('reviews')

@@ -18,26 +18,27 @@ export class ReviewService {
   ) { }
 
   async createReview(taskId: number, dto: CreateReviewDto): Promise<Review> {
+
     const { executorId } = await this.taskService.getTask(taskId);
     
     const reviewEntity = new ReviewEntity({ ...dto, taskId: taskId });
     const review = await this.reviewRepository.create(reviewEntity);
 
     const executor = await this.taskRepository.getExecutorInfo(executorId);
-    this.userService.updateUserRating({ userId: executorId, rating: executor.rating });
+    await this.userService.updateUserRating({ userId: executorId, rating: executor.rating });
 
-    return review
+    return review;
   }
 
   async deleteReview(id: number): Promise<void> {
-    this.reviewRepository.destroy(id);
+    await this.reviewRepository.destroy(id);
   }
 
   async getReview(id: number): Promise<Review> {
-    return this.reviewRepository.findById(id);
+    return await this.reviewRepository.findById(id);
   }
 
   async getReviews(): Promise<Review[]> {
-    return this.reviewRepository.find();
+    return await this.reviewRepository.find();
   }
 }

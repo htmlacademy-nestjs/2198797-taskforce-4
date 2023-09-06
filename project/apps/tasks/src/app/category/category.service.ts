@@ -19,22 +19,22 @@ export class CategoryService {
       throw new ConflictException(CATEGORY_ALREADY_EXISTS);
     }
     const categoryEntity = new CategoryEntity(dto);
-    return this.taskCategoryRepository.create(categoryEntity);
+    return await this.taskCategoryRepository.create(categoryEntity);
   }
 
   async deleteCategory(id: number): Promise<void> {
-    this.taskCategoryRepository.destroy(id);
+    await this.taskCategoryRepository.destroy(id);
   }
 
   async getCategory(id: number): Promise<Category> {
-    return this.taskCategoryRepository.findById(id);
+    return await this.taskCategoryRepository.findById(id);
   }
 
   async getCategories(): Promise<Category[]> {
-    return this.taskCategoryRepository.find();
+    return await this.taskCategoryRepository.find();
   }
 
   async updateCategory(id: number, dto: UpdateCategoryDto): Promise<Category> {
-    return this.taskCategoryRepository.update(id, new CategoryEntity(dto));
+    return await this.taskCategoryRepository.update(id, new CategoryEntity(dto));
   }
 }

@@ -9,7 +9,10 @@ export class CommentMemoryRepository implements CRUDRepository<CommentEntity, nu
   private repository: Record<number, Comment> = {};
 
   public async create(item: CommentEntity): Promise<Comment> {
-    const entry = { ...item.toObject(), commentId: Math.floor(Math.random()*10) };
+    const entry = {
+      ...item.toObject(),
+      commentId: Math.floor(Math.random() * 10)
+    };
     this.repository[entry.commentId] = entry;
     return entry;
   }

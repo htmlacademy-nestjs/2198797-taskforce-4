@@ -8,7 +8,7 @@ export class ClientRdo {
     description: 'The uniq user ID',
     example: '13'
   })
-  @Expose({})
+  @Expose()
   public id: string;
 
   @ApiProperty({
@@ -23,14 +23,14 @@ export class ClientRdo {
     example: 'Ivan'
   })
   @Expose()
-  public firstname: string;
+  public firstName: string;
 
   @ApiProperty({
     description: 'User last name',
     example: 'Ivanov'
   })
   @Expose()
-  public lastname: string;
+  public lastName: string;
 
   @ApiProperty({
     description: 'User city in Moscow/SaintPetersburg/Vladivostok',

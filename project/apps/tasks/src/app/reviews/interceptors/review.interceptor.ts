@@ -4,7 +4,7 @@ import { TaskStatus } from '@project/shared/app-types';
 
 
 @Injectable()
-export class ReviewInterseptor implements NestInterceptor {
+export class ReviewInterceptor implements NestInterceptor {
   constructor(
     private readonly taskService: TaskService,
   ) { }
@@ -12,7 +12,7 @@ export class ReviewInterseptor implements NestInterceptor {
   public async intercept(context: ExecutionContext, next: CallHandler) {
     const request = context.switchToHttp().getRequest();
     const task = await this.taskService.getTask(parseInt(request.params.id))
-    if(task.status !== TaskStatus.Done){
+    if (task.status !== TaskStatus.Done) {
       throw new BadRequestException("You can leave a review for tasks with a status Done");
     }
 

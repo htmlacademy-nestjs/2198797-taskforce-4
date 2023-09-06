@@ -31,7 +31,7 @@ export class CategoryController {
   @Delete('/:id')
   @HttpCode(HttpStatus.NO_CONTENT)
   async destroy(@Param('id') id: number) {
-    this.categoryService.deleteCategory(id);
+    await this.categoryService.deleteCategory(id);
   }
 
   @Patch('/:id')

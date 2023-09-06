@@ -3,6 +3,7 @@ import { CheckAuthGuard } from './guards/check-auth.guard';
 import { AxiosExceptionFilter } from './filters/axios-exception.filter';
 import { CreateNewTaskDto } from './dto/create-new-task.dto';
 import { UpdateTaskDto } from './dto/update-task.dto';
+import { UpdateTaskStatusDto } from './dto/update-task-status.dto';
 import { HttpService } from '@nestjs/axios';
 import { ApplicationServiceURL } from './app.config';
 import { TokenPayload, UserRole } from '@project/shared/app-types';
@@ -73,7 +74,7 @@ export class TasksController {
 
   @UseGuards(CheckAuthGuard, StatusPermissionGuard)
   @Patch('status/:id')
-  public async updateStatus(@Body() dto: CreateNewTaskDto, @Param('id') id: string) {
+  public async updateStatus(@Body() dto: UpdateTaskStatusDto, @Param('id') id: string) {
     const { data } = await this.httpService.axiosRef.patch(`${ApplicationServiceURL.Tasks}/status/${id}`, dto);
     return data;
   }
@@ -100,7 +101,7 @@ export class TasksController {
     formData.append('file', file.buffer, file.originalname);
     const { data } = await this.httpService.axiosRef.post(`${ApplicationServiceURL.Upload}/upload`, formData, {
       headers: {
-        ...formData.getHeaders()
+        ...formData.getHeaders(),
       }
     });
     const pictureRef = `localhost:3006${data.path}`;

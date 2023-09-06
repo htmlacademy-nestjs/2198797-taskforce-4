@@ -31,7 +31,7 @@ export class UpdateUserDto {
   @IsString()
   @Length(3, 50)
   @IsOptional()
-  public firstname?: string;
+  public firstName?: string;
 
   @ApiProperty({
     description: 'User last name',
@@ -40,7 +40,7 @@ export class UpdateUserDto {
   @IsString()
   @Length(3, 50)
   @IsOptional()
-  public lastname?: string;
+  public lastName?: string;
 
   @IsArray()
   @ArrayMaxSize(5)

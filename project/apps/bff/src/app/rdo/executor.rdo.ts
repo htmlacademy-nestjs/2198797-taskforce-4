@@ -15,7 +15,7 @@ export class ExecutorRdo {
     description: 'User date birth (ISO format)',
     example: '1981-03-12'
   })
-  @Expose({name:'dateBirth'})
+  @Expose({ name: 'dateBirth' })
   @Transform(({ value }) => {
     const birthYear = new Date(value).getFullYear();
     const thisYear = new Date().getFullYear();
@@ -35,14 +35,14 @@ export class ExecutorRdo {
     example: 'Ivan'
   })
   @Expose()
-  public firstname: string;
+  public firstName: string;
 
   @ApiProperty({
     description: 'User last name',
     example: 'Ivanov'
   })
   @Expose()
-  public lastname: string;
+  public lastName: string;
 
   @ApiProperty({
     description: 'User city in Moscow/SaintPetersburg/Vladivostok',
@@ -77,7 +77,7 @@ export class ExecutorRdo {
     example: 'Client'
   })
   @Expose()
-  public role:UserRole;
+  public role: UserRole;
 
   @ApiProperty({
     description: 'User rating',

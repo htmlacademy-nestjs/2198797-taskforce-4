@@ -38,14 +38,14 @@ export class UserRdo {
     example: 'Ivan'
   })
   @Expose()
-  public firstname: string;
+  public firstName: string;
 
   @ApiProperty({
     description: 'User last name',
     example: 'Ivanov'
   })
   @Expose()
-  public lastname: string;
+  public lastName: string;
 
   @ApiProperty({
     description: 'User city in Moscow/SaintPetersburg/Vladivostok',
@@ -80,14 +80,21 @@ export class UserRdo {
     example: 'Client'
   })
   @Expose()
-  public role:UserRole;
+  public role: UserRole;
 
-  
+
   @ApiProperty({
     description: 'User rank',
     example: '1'
   })
   @Expose()
-  public rank:number;
+  public rank: number;
+
+  @ApiProperty({
+    description: 'User rating',
+    example: '5'
+  })
+  @Expose()
+  public rating: number;
 
 }

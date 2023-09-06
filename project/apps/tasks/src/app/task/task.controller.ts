@@ -9,7 +9,7 @@ import { TaskQuery } from './query/task.query';
 import { UpdateTaskStatusDto } from './dto/update-task-status.dto';
 import { TaskTagPipe } from './pipes/task-tag.pipe';
 import { AddTaskResponseDto } from './dto/add-task-response.dto';
-import { TaskStatusInterseptor } from './interceptors/task-status.interceptor';
+import { TaskStatusInterceptor } from './interceptors/task-status.interceptor';
 import { ExecutorRdo } from './rdo/executor.rdo';
 import { ClientRdo } from './rdo/client.rdo';
 import { StatusQuery } from './query/status.query';
@@ -31,7 +31,12 @@ export class TaskController {
   @Post('create')
   public async create(@Body(TaskTagPipe) dto: CreateTaskDto) {
     const newTask = await this.taskService.create(dto);
-    this.notifyService.addNewTask({ title: newTask.title, description: newTask.description, price: newTask.price, city: newTask.city });
+    await this.notifyService.addNewTask({
+      title: newTask.title,
+      description: newTask.description,
+      price: newTask.price,
+      city: newTask.city
+    });
     return fillObject(TaskRdo, newTask);
   }
 
@@ -96,7 +101,7 @@ export class TaskController {
     await this.taskService.delete(id);
   }
 
-  @UseInterceptors(TaskStatusInterseptor)
+  @UseInterceptors(TaskStatusInterceptor)
   @Patch('status/:id')
   public async changeStatus(@Body() dto: UpdateTaskStatusDto, @Param('id') id: number) {
     const task = await this.taskService.updateTaskStatus(id, dto);
